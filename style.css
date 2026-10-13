@@ -1,8 +1,5 @@
 
-/* ========================================
-   JANA AL-DAMANHOURI | PORTFOLIO
-   Theme: Calm Navy & Soft Teal
-   ======================================== */
+
 
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
@@ -22,7 +19,6 @@
   --transition: 0.3s ease;
 }
 
-/* ===== Reset ===== */
 
 * {
   margin: 0;
@@ -252,7 +248,6 @@ main {
   line-height: 1.9;
 }
 
-/* ===== Buttons ===== */
 
 .btn,
 .btn-outline {
@@ -488,7 +483,6 @@ button:focus-visible {
   margin-top: auto;
 }
 
-/* ===== Certifications ===== */
 
 .cert-list {
   display: grid;
@@ -547,7 +541,6 @@ button:focus-visible {
   font-weight: 600;
 }
 
-/* ===== Footer ===== */
 
 .site-footer {
   padding: 27px 20px;
@@ -560,7 +553,6 @@ button:focus-visible {
   font-size: 13px;
 }
 
-/* ===== Back to Top ===== */
 
 .back-to-top {
   position: fixed;
@@ -599,7 +591,6 @@ button:focus-visible {
   transform: translateY(-4px);
 }
 
-/* ===== Responsive Design ===== */
 
 @media (max-width: 900px) {
   .nav-container {
@@ -738,7 +729,6 @@ button:focus-visible {
   }
 }
 
-/* ===== Accessibility ===== */
 
 @media (prefers-reduced-motion: reduce) {
   *,
