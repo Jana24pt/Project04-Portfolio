@@ -1,18 +1,7 @@
-/* =========================================================
-   Jana AL-Damanhouri – Portfolio  |  script.js
-   Vanilla JavaScript (ES6+), no libraries.
-
-   Event lifecycle used everywhere in this file:
-     User action  ->  Event fires  ->  JS callback runs
-                  ->  DOM / CSS mutation  ->  user sees the change
-   ========================================================= */
 
 "use strict";
 
-/* ---------------------------------------------------------
-   1. Translation dictionary (Bounce 02)
-   Keys match the data-i18n attributes in index.html.
-   --------------------------------------------------------- */
+
 const translations = {
   en: {
     pageTitle: "Jana AL-Damanhouri | Portfolio",
@@ -171,9 +160,7 @@ const translations = {
   }
 };
 
-/* ---------------------------------------------------------
-   2. Small helpers
-   --------------------------------------------------------- */
+
 const root = document.documentElement;
 const $ = (selector, scope = document) => scope.querySelector(selector);
 const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
@@ -192,14 +179,7 @@ const state = {
 
 const t = (key) => translations[state.lang][key] ?? translations.en[key] ?? key;
 
-/* ---------------------------------------------------------
-   3. Theme switcher (Exercise 00 – mandatory feature)
-   Lifecycle:
-     click on #theme-toggle  -> "click" event fires
-     -> toggleTheme() callback runs
-     -> data-theme attribute on <html> changes
-     -> CSS variables for that theme take over, page re-colors.
-   --------------------------------------------------------- */
+
 const themeBtn = $("#theme-toggle");
 const themeIcon = $("#theme-icon");
 
@@ -217,13 +197,7 @@ function toggleTheme() {
 
 themeBtn.addEventListener("click", toggleTheme);
 
-/* ---------------------------------------------------------
-   4. Profile photo switcher (Bounce 01)
-   Lifecycle:
-     click on a .chip -> event fires -> setPhoto() runs
-     -> fade out (class .fading) -> swap .src and .alt
-     -> fade in (class removed). Page never reloads.
-   --------------------------------------------------------- */
+
 const photo = $("#profile-photo");
 const chips = $$(".chip");
 
@@ -267,13 +241,7 @@ chips.forEach((chip) => {
   chip.addEventListener("click", () => setPhoto(chip.dataset.photo));
 });
 
-/* ---------------------------------------------------------
-   5. Language switcher (Bounce 02)
-   Lifecycle:
-     click on #lang-toggle -> event fires -> toggleLanguage()
-     -> set lang + dir on <html> -> rewrite every [data-i18n]
-     element's textContent from the dictionary.
-   --------------------------------------------------------- */
+
 const langBtn = $("#lang-toggle");
 
 function applyLanguage(lang) {
@@ -314,9 +282,7 @@ function toggleLanguage() {
 
 langBtn.addEventListener("click", toggleLanguage);
 
-/* ---------------------------------------------------------
-   6. Mobile menu
-   --------------------------------------------------------- */
+
 const menuBtn = $("#menu-toggle");
 const navLinks = $("#nav-links");
 
@@ -329,9 +295,7 @@ menuBtn.addEventListener("click", () => setMenu(!navLinks.classList.contains("op
 navLinks.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
 
-/* ---------------------------------------------------------
-   7. Active nav link while scrolling + back-to-top button
-   --------------------------------------------------------- */
+
 const sections = $$("main section[id]");
 const linkFor = (id) => $(`.nav-links a[href="#${id}"]`);
 
@@ -353,10 +317,7 @@ window.addEventListener("scroll", () => {
 }, { passive: true });
 topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-/* ---------------------------------------------------------
-   8. Contact form (client-side validation, opens mail client)
-   There is no backend, so a valid form builds a mailto: link.
-   --------------------------------------------------------- */
+
 const form = $("#contact-form");
 const statusEl = $("#form-status");
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -396,9 +357,7 @@ form.addEventListener("submit", (e) => {
   form.reset();
 });
 
-/* ---------------------------------------------------------
-   9. Init: restore saved preferences (or sensible defaults)
-   --------------------------------------------------------- */
+
 (function init() {
   const savedTheme = store.get("theme");
   const prefersLight = window.matchMedia?.("(prefers-color-scheme: light)").matches;
