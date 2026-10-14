@@ -1,21 +1,25 @@
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="light">
+<html lang="en" dir="ltr" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jana Zeyad AL-Damanhouri | Portfolio</title>
+  <meta name="description" content="Portfolio of Jana Zeyad AL-Damanhouri, cybersecurity graduate focused on GRC, networking, Linux and cloud.">
+  <title>Jana AL-Damanhouri | Portfolio</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
-  <!-- Header / Navbar -->
+  <!-- ============ HEADER / NAVBAR ============ -->
   <header class="site-header">
-    <nav class="nav-container" aria-label="Main navigation">
-      <a class="logo" href="#about">Jana AL-Damanhouri</a>
+    <nav class="nav" aria-label="Main navigation">
+      <a class="logo" href="#about" aria-label="Jana AL-Damanhouri">
+        <span class="logo-mark" aria-hidden="true">J</span>
+        <span class="logo-text">Jana<span class="logo-dot">.</span></span>
+      </a>
 
-      <ul class="nav-links">
+      <ul id="nav-links" class="nav-links">
         <li><a href="#about" data-i18n="navAbout">About</a></li>
         <li><a href="#skills" data-i18n="navSkills">Skills</a></li>
         <li><a href="#projects" data-i18n="navProjects">Projects</a></li>
@@ -23,43 +27,38 @@
         <li><a href="#certifications" data-i18n="navCerts">Certifications</a></li>
         <li><a href="#hobbies" data-i18n="navHobbies">Hobbies</a></li>
         <li><a href="#contact" data-i18n="navContact">Contact</a></li>
-        <li>
-          <a
-            href="https://drive.google.com/file/d/1Btx5qY1AUv7fYJHUmWSiZMvNr46yV1pF/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="navCv"
-          >CV</a>
-        </li>
       </ul>
 
       <div class="controls">
         <button id="theme-toggle" class="icon-btn" type="button"
-          aria-label="Switch theme">🌙</button>
+          aria-label="Switch theme" data-i18n-aria="themeLabel">
+          <span id="theme-icon" aria-hidden="true">☀️</span>
+        </button>
         <button id="lang-toggle" class="icon-btn lang-btn" type="button"
           aria-label="Switch language">العربية</button>
+        <button id="menu-toggle" class="icon-btn menu-btn" type="button"
+          aria-label="Menu" aria-expanded="false" aria-controls="nav-links"
+          data-i18n-aria="menuLabel">
+          <span class="bars" aria-hidden="true"></span>
+        </button>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main id="main">
 
-    <!-- About Me -->
+    <!-- ============ ABOUT ============ -->
     <section id="about" class="section hero">
-      <div class="about">
-        <div class="about-text">
-          <h1 class="name" data-i18n="name">
-            Jana Zeyad AL-Damanhouri
-          </h1>
-
-          <p class="role" data-i18n="role">
-            Fresh Cyber Security Graduate
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow"><span class="pulse" aria-hidden="true"></span>
+            <span data-i18n="eyebrow">Open to Cybersecurity · GRC · Cloud roles</span>
           </p>
-
-          <p class="location" data-i18n="location">
-            Amman, Jordan
+          <h1 class="name" data-i18n="name">Jana Zeyad AL-Damanhouri</h1>
+          <p class="role" data-i18n="role">Fresh Cyber Security Graduate</p>
+          <p class="location"><span aria-hidden="true">📍</span>
+            <span data-i18n="location">Amman, Jordan</span>
           </p>
-
           <p class="summary" data-i18n="summary">
             Cybersecurity graduate with hands-on training in cybersecurity,
             networking, Linux administration, GRC, and cloud fundamentals.
@@ -69,443 +68,272 @@
             or Cloud roles.
           </p>
 
-          <a class="btn"
-            href="https://drive.google.com/file/d/1Btx5qY1AUv7fYJHUmWSiZMvNr46yV1pF/view?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnCv">
-            View my CV (PDF)
-          </a>
+          <div class="hero-actions">
+            <a class="btn btn-primary"
+              href="https://drive.google.com/file/d/1Btx5qY1AUv7fYJHUmWSiZMvNr46yV1pF/view?usp=sharing"
+              target="_blank" rel="noopener noreferrer"
+              data-i18n="btnCv">View my CV (PDF)</a>
+            <a class="btn btn-ghost" href="#contact" data-i18n="btnContact">Get in touch</a>
+          </div>
+
+          <ul class="stats">
+            <li class="stat"><strong>98%</strong>
+              <span data-i18n="stat1">Cyber Shield – ranked 1st</span></li>
+            <li class="stat"><strong>120h</strong>
+              <span data-i18n="stat2">Hands-on training</span></li>
+            <li class="stat"><strong>2</strong>
+              <span data-i18n="stat3">Cloud certifications</span></li>
+          </ul>
         </div>
 
         <div class="photo-box">
-          <img
-            id="profile-photo"
-            class="profile-photo"
-            src="assets/photo-professional.jpg"
-            alt="Professional profile photo of Jana"
-            width="260"
-            height="260"
-          >
-
-          <div class="photo-buttons" role="group"
-            aria-label="Profile photo style">
-            <button type="button" class="chip"
-              data-photo="casual" data-i18n="photoCasual">
-              Casual
-            </button>
-
-            <button type="button" class="chip active"
-              data-photo="professional" data-i18n="photoPro">
-              Professional
-            </button>
+          <div class="photo-frame">
+            <img id="profile-photo" class="profile-photo"
+              src="assets/photo-professional.jpg"
+              alt="Professional profile photo of Jana"
+              width="320" height="320">
+          </div>
+          <div class="photo-buttons" role="group" aria-label="Profile photo style"
+            data-i18n-aria="photoGroup">
+            <button type="button" class="chip" data-photo="casual" aria-pressed="false"
+              data-i18n="photoCasual">Casual</button>
+            <button type="button" class="chip active" data-photo="professional"
+              aria-pressed="true" data-i18n="photoPro">Professional</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Skills -->
+    <!-- ============ SKILLS ============ -->
     <section id="skills" class="section">
-      <h2 class="section-title" data-i18n="skillsTitle">Skills</h2>
-
-      <ul class="skills-grid">
-        <li class="skill-card">
-          <h3 data-i18n="skillSec">Cybersecurity &amp; GRC</h3>
-          <p>ISO 27001 &middot; Risk Assessment &middot; Policies</p>
-        </li>
-
-        <li class="skill-card">
-          <h3 data-i18n="skillNet">Networking</h3>
-          <p>TCP/IP &middot; Routing &middot; Switching</p>
-        </li>
-
-        <li class="skill-card">
-          <h3 data-i18n="skillOs">Operating Systems</h3>
-          <p>Linux &middot; Windows Server</p>
-        </li>
-
-        <li class="skill-card">
-          <h3 data-i18n="skillCloud">Cloud</h3>
-          <p>AWS &middot; Azure</p>
-        </li>
-
-        <li class="skill-card">
-          <h3 data-i18n="skillWeb">Web Development</h3>
-          <p>HTML5 &middot; CSS3 &middot; JavaScript</p>
-        </li>
-
-        <li class="skill-card">
-          <h3 data-i18n="skillGit">Version Control</h3>
-          <p>Git &middot; GitHub</p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Projects -->
-    <section id="projects" class="section">
-      <h2 class="section-title" data-i18n="projectsTitle">
-        Projects
-      </h2>
-
-      <div class="card-container">
-
-        <!-- Amman42 Project 00 -->
-        <article class="card">
-          <h3 data-i18n="p0Title">
-            Project 00 – Linux &amp; GitHub
-          </h3>
-
-          <p data-i18n="p0Desc">
-            Practiced Linux command-line operations, file management,
-            and GitHub repository workflows.
-          </p>
-
-          <a class="btn"
-            href="https://github.com/Jana24pt/Projec00"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnGithub">
-            View on GitHub
-          </a>
-        </article>
-
-        <!-- Amman42 Project 01 -->
-        <article class="card">
-          <h3 data-i18n="p1Title">
-            Project 01 – HTML Fundamentals
-          </h3>
-
-          <p data-i18n="p1Desc">
-            Built web pages using HTML structure, semantic elements,
-            lists, tables, forms, and accessible markup.
-          </p>
-
-          <a class="btn"
-            href="https://github.com/Jana24pt/Project01"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnGithub">
-            View on GitHub
-          </a>
-        </article>
-
-        <!-- Amman42 Project 02 -->
-        <article class="card">
-          <h3 data-i18n="p2Title">
-            Project 02 – CSS &amp; Visual Presentation
-          </h3>
-
-          <p data-i18n="p2Desc">
-            Practiced CSS styling, Flexbox layouts, positioning,
-            shapes, colors, and the box model.
-          </p>
-
-          <a class="btn"
-            href="https://github.com/Jana24pt/Project02"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnGithub">
-            View on GitHub
-          </a>
-        </article>
-
-        <!-- Amman42 Project 03 -->
-        <article class="card">
-          <h3 data-i18n="p3Title">
-            Project 03 – JavaScript Fundamentals
-          </h3>
-
-          <p data-i18n="p3Desc">
-            Practiced JavaScript variables, functions, conditions,
-            DOM manipulation, event handling, and interactive applications.
-          </p>
-
-          <a class="btn"
-            href="https://github.com/Jana24pt/Project03"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnGithub">
-            View on GitHub
-          </a>
-        </article>
-
-        <!-- Amman42 Project 04 -->
-        <article class="card">
-          <h3 data-i18n="p6Title">
-            Project 04 – Portfolio Website
-          </h3>
-
-          <p data-i18n="p6Desc">
-            Developed a personal portfolio using HTML, CSS, and JavaScript
-            to present my skills, training, and projects.
-          </p>
-
-          <a class="btn"
-            href="https://github.com/Jana24pt/Project04-Portfolio"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnGithub">
-            View on GitHub
-          </a>
-        </article>
-
-        <!-- Graduation Project -->
-        <article class="card">
-          <h3 data-i18n="p4Title">
-            Graduation Project: Risk Assessment Tool
-          </h3>
-
-          <p data-i18n="p4Desc">
-            Web-based risk evaluation platform. I analyzed user and system
-            requirements, helped define features based on risk management
-            and GRC principles, structured the assessment workflow,
-            and documented the system.
-          </p>
-
-          <a class="btn"
-            href="https://github.com/Jana24pt/graduation-project"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnGithub">
-            View on GitHub
-          </a>
-        </article>
-
-        <!-- GRC Capstone -->
-        <article class="card">
-          <h3 data-i18n="p5Title">
-            ISO 27001 GRC Capstone (FinTech)
-          </h3>
-
-          <p data-i18n="p5Desc">
-            Capstone project from SMT Group training covering ISMS scope,
-            asset inventory, risk register and treatment plan, security
-            policy, and an implementation roadmap.
-          </p>
-
-          <a class="btn"
-            href="https://drive.google.com/drive/folders/16gR8kkKBn4yZZfxFUhO9I7sk_8f2dxUQ?usp=sharing"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="btnDrive">
-            View on Google Drive
-          </a>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- Training -->
-    <section id="training" class="section">
-      <h2 class="section-title" data-i18n="trainingTitle">
-        Training
-      </h2>
-
-      <ol class="timeline">
-        <li class="timeline-item">
-          <h3 data-i18n="t1Title">
-            Advanced Digital Skills: Web &amp; Cybersecurity – Amman42
-          </h3>
-          <p class="date">29/09/2026 &ndash; 01/12/2026</p>
-          <p data-i18n="t1Desc">
-            Advanced training program in web development and cybersecurity.
-          </p>
-        </li>
-
-        <li class="timeline-item">
-          <h3 data-i18n="t2Title">
-            Path2Cyber Program – GRC Trainee, SMT Group
-          </h3>
-          <p class="date">05/2026 &ndash; 08/2026</p>
-          <p data-i18n="t2Desc">
-            Practical training in GRC, ISO 27001, risk assessment and
-            treatment, asset inventory, policy development, networking,
-            Linux, and Windows Server.
-          </p>
-        </li>
-
-        <li class="timeline-item">
-          <h3 data-i18n="t3Title">
-            Cybersecurity Upskilling Program – Cyber Shield (JODB)
-          </h3>
-          <p class="date">07/2025 &ndash; 09/2025</p>
-          <p data-i18n="t3Desc">
-            Completed 120 hours of training in networking, Linux,
-            ethical hacking, and digital forensics. Ranked first
-            in the cohort with 98% — Highest Honors.
-          </p>
-        </li>
-      </ol>
-    </section>
-
-    <!-- Certifications -->
-    <section id="certifications" class="section">
-      <h2 class="section-title" data-i18n="certsTitle">
-        Certifications and Courses
-      </h2>
-
-      <ul class="cert-list">
-        <li class="cert-item">
-          <span class="cert-name" data-i18n="c1">
-            AWS Certified Cloud Practitioner
-          </span>
-          <a class="cert-link"
-            href="https://www.credly.com/earner/earned/badge/550cfdb1-528f-41e4-aee6-3477479afaca"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="verify">Verify on Credly</a>
-        </li>
-
-        <li class="cert-item">
-          <span class="cert-name" data-i18n="c2">
-            Microsoft Certified: Azure Fundamentals (AZ-900)
-          </span>
-          <a class="cert-link"
-            href="https://www.credly.com/earner/earned/badge/69f498c5-9aec-4879-9459-cd72bdced26b"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-i18n="verify">Verify on Credly</a>
-        </li>
-
-        <li class="cert-item">
-          <span class="cert-name" data-i18n="c3">
-            Microsoft Certified: Azure Administrator Associate (AZ-104)
-          </span>
-          <span class="status" data-i18n="inProgress">In progress</span>
-        </li>
-
-        <li class="cert-item">
-          <span class="cert-name" data-i18n="c4">
-            Red Hat System Administration I (RH124) – Course
-          </span>
-        </li>
-
-        <li class="cert-item">
-          <span class="cert-name" data-i18n="c5">
-            ISO/IEC 27001:2022 Lead Implementer – Udemy Course
-          </span>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Hobbies -->
-    <section id="hobbies" class="section">
-      <h2 class="section-title" data-i18n="hobbiesTitle">
-        Hobbies
-      </h2>
-
-      <ul class="hobbies-list">
-        <li class="hobby" data-i18n="hobby1">
-          🔐 Practicing security labs
-        </li>
-        <li class="hobby" data-i18n="hobby2">
-          📚 Reading about cybersecurity
-        </li>
-        <li class="hobby" data-i18n="hobby3">
-          💻 Building small web projects
-        </li>
-        <li class="hobby" data-i18n="hobby4">
-          ☁️ Exploring cloud platforms
-        </li>
-      </ul>
-    </section>
-
-    <!-- Contact -->
-    <section id="contact" class="section">
-      <h2 class="section-title" data-i18n="contactTitle">
-        Contact
-      </h2>
-
-      <div class="contact-wrap">
-        <ul class="contact-list">
-          <li class="contact-row">
-            <span class="contact-label">LinkedIn</span>
-            <a dir="ltr"
-              href="https://www.linkedin.com/in/jana-zeyad-605a3b25b"
-              target="_blank"
-              rel="noopener noreferrer">
-              linkedin.com/in/jana-zeyad-605a3b25b
-            </a>
+      <div class="container">
+        <h2 class="section-title" data-i18n="skillsTitle">Skills</h2>
+        <ul class="skills-grid">
+          <li class="skill-card">
+            <span class="skill-icon" aria-hidden="true">🛡️</span>
+            <h3 data-i18n="skillSec">Cybersecurity &amp; GRC</h3>
+            <p>ISO 27001 · Risk Assessment · Policies</p>
           </li>
-
-          <li class="contact-row">
-            <span class="contact-label" data-i18n="contactEmail">
-              Email
-            </span>
-            <a dir="ltr" href="mailto:jana.cyber.tech@gmail.com">
-              jana.cyber.tech@gmail.com
-            </a>
+          <li class="skill-card">
+            <span class="skill-icon" aria-hidden="true">🌐</span>
+            <h3 data-i18n="skillNet">Networking</h3>
+            <p>TCP/IP · Routing · Switching</p>
           </li>
-
-          <li class="contact-row">
-            <span class="contact-label" data-i18n="contactPhone">
-              Phone
-            </span>
-            <a dir="ltr" href="tel:+962782145495">
-              +962 78 214 5495
-            </a>
+          <li class="skill-card">
+            <span class="skill-icon" aria-hidden="true">🐧</span>
+            <h3 data-i18n="skillOs">Operating Systems</h3>
+            <p>Linux · Windows Server</p>
           </li>
-
-          <li class="contact-row">
-            <span class="contact-label">GitHub</span>
-            <a dir="ltr"
-              href="https://github.com/Jana24pt"
-              target="_blank"
-              rel="noopener noreferrer">
-              github.com/Jana24pt
-            </a>
+          <li class="skill-card">
+            <span class="skill-icon" aria-hidden="true">☁️</span>
+            <h3 data-i18n="skillCloud">Cloud</h3>
+            <p>AWS · Azure</p>
+          </li>
+          <li class="skill-card">
+            <span class="skill-icon" aria-hidden="true">🧩</span>
+            <h3 data-i18n="skillWeb">Web Development</h3>
+            <p>HTML5 · CSS3 · JavaScript</p>
+          </li>
+          <li class="skill-card">
+            <span class="skill-icon" aria-hidden="true">🔀</span>
+            <h3 data-i18n="skillGit">Version Control</h3>
+            <p>Git · GitHub</p>
           </li>
         </ul>
-
-        <form id="contact-form" class="contact-form" novalidate>
-          <div class="field">
-            <label for="name-input" data-i18n="labelName">
-              Your name
-            </label>
-            <input id="name-input" name="name" type="text"
-              required autocomplete="name">
-          </div>
-
-          <div class="field">
-            <label for="email-input" data-i18n="labelEmail">
-              Your email
-            </label>
-            <input id="email-input" name="email" type="email"
-              required autocomplete="email">
-          </div>
-
-          <div class="field">
-            <label for="message-input" data-i18n="labelMessage">
-              Message
-            </label>
-            <textarea id="message-input" name="message"
-              rows="5" required></textarea>
-          </div>
-
-          <button class="btn" type="submit" data-i18n="send">
-            Send message
-          </button>
-
-          <p id="form-status" class="form-status"
-            role="status" aria-live="polite"></p>
-        </form>
       </div>
     </section>
 
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="section-title" data-i18n="projectsTitle">Projects</h2>
+
+        <div class="card-container">
+          <article class="card">
+            <span class="card-tag">00</span>
+            <h3 data-i18n="p0Title">Project 00 – Linux &amp; GitHub</h3>
+            <p data-i18n="p0Desc">Practiced Linux command-line operations, file management, and GitHub repository workflows.</p>
+            <a class="card-link" href="https://github.com/Jana24pt/Projec00"
+              target="_blank" rel="noopener noreferrer" data-i18n="btnGithub">View on GitHub</a>
+          </article>
+
+          <article class="card">
+            <span class="card-tag">01</span>
+            <h3 data-i18n="p1Title">Project 01 – HTML Fundamentals</h3>
+            <p data-i18n="p1Desc">Built web pages using HTML structure, semantic elements, lists, tables, forms, and accessible markup.</p>
+            <a class="card-link" href="https://github.com/Jana24pt/Project01"
+              target="_blank" rel="noopener noreferrer" data-i18n="btnGithub">View on GitHub</a>
+          </article>
+
+          <article class="card">
+            <span class="card-tag">02</span>
+            <h3 data-i18n="p2Title">Project 02 – CSS &amp; Visual Presentation</h3>
+            <p data-i18n="p2Desc">Practiced CSS styling, Flexbox layouts, positioning, shapes, colors, and the box model.</p>
+            <a class="card-link" href="https://github.com/Jana24pt/Project02"
+              target="_blank" rel="noopener noreferrer" data-i18n="btnGithub">View on GitHub</a>
+          </article>
+
+          <article class="card">
+            <span class="card-tag">03</span>
+            <h3 data-i18n="p3Title">Project 03 – JavaScript Fundamentals</h3>
+            <p data-i18n="p3Desc">Practiced JavaScript variables, functions, conditions, DOM manipulation, event handling, and interactive applications.</p>
+            <a class="card-link" href="https://github.com/Jana24pt/Project03"
+              target="_blank" rel="noopener noreferrer" data-i18n="btnGithub">View on GitHub</a>
+          </article>
+
+          <article class="card">
+            <span class="card-tag">04</span>
+            <h3 data-i18n="p4Title">Project 04 – Portfolio Website</h3>
+            <p data-i18n="p4Desc">Developed a personal portfolio using HTML, CSS, and JavaScript to present my skills, training, and projects.</p>
+            <a class="card-link" href="https://github.com/Jana24pt/Project04-Portfolio"
+              target="_blank" rel="noopener noreferrer" data-i18n="btnGithub">View on GitHub</a>
+          </article>
+
+          <article class="card card-featured">
+            <span class="card-tag" data-i18n="tagGrad">Graduation</span>
+            <h3 data-i18n="p5Title">Graduation Project: Risk Assessment Tool</h3>
+            <p data-i18n="p5Desc">Web-based risk evaluation platform. I analyzed user and system requirements, helped define features based on risk management and GRC principles, structured the assessment workflow, and documented the system.</p>
+            <a class="card-link" href="https://github.com/Jana24pt/graduation-project"
+              target="_blank" rel="noopener noreferrer" data-i18n="btnGithub">View on GitHub</a>
+          </article>
+
+          <article class="card card-featured">
+            <span class="card-tag" data-i18n="tagGrc">GRC</span>
+            <h3 data-i18n="p6Title">ISO 27001 GRC Capstone (FinTech)</h3>
+            <p data-i18n="p6Desc">Capstone project from SMT Group training covering ISMS scope, asset inventory, risk register and treatment plan, security policy, and an implementation roadmap.</p>
+            <a class="card-link"
+              href="https://drive.google.com/drive/folders/16gR8kkKBn4yZZfxFUhO9I7sk_8f2dxUQ?usp=sharing"
+              target="_blank" rel="noopener noreferrer" data-i18n="btnDrive">View on Google Drive</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRAINING ============ -->
+    <section id="training" class="section">
+      <div class="container">
+        <h2 class="section-title" data-i18n="trainingTitle">Training</h2>
+        <ol class="timeline">
+          <li class="timeline-item">
+            <p class="date">29/09/2026 – 01/12/2026</p>
+            <h3 data-i18n="t1Title">Advanced Digital Skills: Web &amp; Cybersecurity – Amman42</h3>
+            <p data-i18n="t1Desc">Advanced training program in web development and cybersecurity.</p>
+          </li>
+          <li class="timeline-item">
+            <p class="date">05/2026 – 08/2026</p>
+            <h3 data-i18n="t2Title">Path2Cyber Program – GRC Trainee, SMT Group</h3>
+            <p data-i18n="t2Desc">Practical training in GRC, ISO 27001, risk assessment and treatment, asset inventory, policy development, networking, Linux, and Windows Server.</p>
+          </li>
+          <li class="timeline-item">
+            <p class="date">07/2025 – 09/2025</p>
+            <h3 data-i18n="t3Title">Cybersecurity Upskilling Program – Cyber Shield (JODB)</h3>
+            <p data-i18n="t3Desc">Completed 120 hours of training in networking, Linux, ethical hacking, and digital forensics. Ranked first in the cohort with 98% — Highest Honors.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ CERTIFICATIONS ============ -->
+    <section id="certifications" class="section">
+      <div class="container">
+        <h2 class="section-title" data-i18n="certsTitle">Certifications and Courses</h2>
+        <ul class="cert-list">
+          <li class="cert-item">
+            <span class="cert-name" data-i18n="c1">AWS Certified Cloud Practitioner</span>
+            <a class="cert-link" href="https://www.credly.com/earner/earned/badge/550cfdb1-528f-41e4-aee6-3477479afaca"
+              target="_blank" rel="noopener noreferrer" data-i18n="verify">Verify on Credly</a>
+          </li>
+          <li class="cert-item">
+            <span class="cert-name" data-i18n="c2">Microsoft Certified: Azure Fundamentals (AZ-900)</span>
+            <a class="cert-link" href="https://www.credly.com/earner/earned/badge/69f498c5-9aec-4879-9459-cd72bdced26b"
+              target="_blank" rel="noopener noreferrer" data-i18n="verify">Verify on Credly</a>
+          </li>
+          <li class="cert-item">
+            <span class="cert-name" data-i18n="c3">Microsoft Certified: Azure Administrator Associate (AZ-104)</span>
+            <span class="status" data-i18n="inProgress">In progress</span>
+          </li>
+          <li class="cert-item">
+            <span class="cert-name" data-i18n="c4">Red Hat System Administration I (RH124) – Course</span>
+            <span class="status status-done" data-i18n="course">Course</span>
+          </li>
+          <li class="cert-item">
+            <span class="cert-name" data-i18n="c5">ISO/IEC 27001:2022 Lead Implementer – Udemy Course</span>
+            <span class="status status-done" data-i18n="course">Course</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ HOBBIES ============ -->
+    <section id="hobbies" class="section">
+      <div class="container">
+        <h2 class="section-title" data-i18n="hobbiesTitle">Hobbies</h2>
+        <ul class="hobbies-list">
+          <li class="hobby"><span aria-hidden="true">🔐</span><span data-i18n="hobby1">Practicing security labs</span></li>
+          <li class="hobby"><span aria-hidden="true">📚</span><span data-i18n="hobby2">Reading about cybersecurity</span></li>
+          <li class="hobby"><span aria-hidden="true">💻</span><span data-i18n="hobby3">Building small web projects</span></li>
+          <li class="hobby"><span aria-hidden="true">☁️</span><span data-i18n="hobby4">Exploring cloud platforms</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section">
+      <div class="container">
+        <h2 class="section-title" data-i18n="contactTitle">Contact</h2>
+        <div class="contact-wrap">
+          <ul class="contact-list">
+            <li class="contact-row">
+              <span class="contact-label">LinkedIn</span>
+              <a dir="ltr" href="https://www.linkedin.com/in/jana-zeyad-605a3b25b"
+                target="_blank" rel="noopener noreferrer">linkedin.com/in/jana-zeyad-605a3b25b</a>
+            </li>
+            <li class="contact-row">
+              <span class="contact-label" data-i18n="contactEmail">Email</span>
+              <a dir="ltr" href="mailto:jana.cyber.tech@gmail.com">jana.cyber.tech@gmail.com</a>
+            </li>
+            <li class="contact-row">
+              <span class="contact-label" data-i18n="contactPhone">Phone</span>
+              <a dir="ltr" href="tel:+962782145495">+962 78 214 5495</a>
+            </li>
+            <li class="contact-row">
+              <span class="contact-label">GitHub</span>
+              <a dir="ltr" href="https://github.com/Jana24pt"
+                target="_blank" rel="noopener noreferrer">github.com/Jana24pt</a>
+            </li>
+          </ul>
+
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="field">
+              <label for="name-input" data-i18n="labelName">Your name</label>
+              <input id="name-input" name="name" type="text" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="email-input" data-i18n="labelEmail">Your email</label>
+              <input id="email-input" name="email" type="email" required autocomplete="email" dir="ltr">
+            </div>
+            <div class="field">
+              <label for="message-input" data-i18n="labelMessage">Message</label>
+              <textarea id="message-input" name="message" rows="5" required></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit" data-i18n="send">Send message</button>
+            <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- Footer -->
+  <!-- ============ FOOTER ============ -->
   <footer class="site-footer">
-    <p id="footer-text">
-      &copy; 2026 Jana Zeyad AL-Damanhouri
-    </p>
+    <div class="container footer-inner">
+      <p id="footer-text">&copy; 2026 Jana Zeyad AL-Damanhouri</p>
+      <p class="footer-note" data-i18n="footerNote">Built by hand with HTML, CSS &amp; JavaScript.</p>
+    </div>
   </footer>
 
-  <button id="back-to-top" class="back-to-top"
-    type="button" aria-label="Back to top">
-    &uarr;
-  </button>
-
+  <button id="back-to-top" class="back-to-top" type="button"
+    aria-label="Back to top" data-i18n-aria="topLabel">↑</button>
 </body>
 </html>
-
+ 
