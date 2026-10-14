@@ -1,393 +1,417 @@
 /* =========================================================
-   1. Translation dictionary (Bounce 02)
+   Jana AL-Damanhouri – Portfolio
+   Hand-written CSS3: custom properties, Flexbox, media queries.
+   Logical properties (inline-start / inline-end) are used so the
+   layout flips cleanly between LTR (English) and RTL (Arabic).
    ========================================================= */
-const translations = {
-  en: {
-    pageTitle: "Jana Zeyad AL-Damanhouri | Portfolio",
-    navAbout: "About",
-    navSkills: "Skills",
-    navProjects: "Projects",
-    navTraining: "Training",
-    navCerts: "Certifications",
-    navHobbies: "Hobbies",
-    navContact: "Contact",
-    navCv: "CV",
 
-    name: "Jana Zeyad AL-Damanhouri",
-    role: "Fresh Cyber Security Graduate",
-    location: "Amman, Jordan",
-    summary:
-      "Cybersecurity graduate with hands-on training in cybersecurity, networking, Linux administration, GRC, and cloud fundamentals. Familiar with ISO 27001 methodology, Linux and Windows environments, networking, AWS, and Azure. Analytical, detail-oriented, and eager to learn and contribute in Cybersecurity, GRC, IT Operations, or Cloud roles.",
-    btnCv: "View my CV (PDF)",
-    photoCasual: "Casual",
-    photoPro: "Professional",
-    altCasual: "Casual profile photo of Jana",
-    altPro: "Professional profile photo of Jana",
+/* ---------- Theme tokens ---------- */
+:root {
+  --radius: 16px;
+  --radius-sm: 10px;
+  --max-w: 1120px;
+  --header-h: 68px;
+  --ease: 0.3s ease;
+  --font: "Segoe UI", "Noto Sans Arabic", Tahoma, system-ui, -apple-system, Arial, sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Consolas, "Courier New", monospace;
+}
 
-    skillsTitle: "Skills",
-    skillSec: "Cybersecurity & GRC",
-    skillNet: "Networking",
-    skillOs: "Operating Systems",
-    skillCloud: "Cloud",
-    skillWeb: "Web Development",
-    skillGit: "Version Control",
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --bg-alt: #0f1a2e;
+  --surface: #131f36;
+  --surface-hover: #182744;
+  --border: #22314f;
+  --text: #e8eefc;
+  --muted: #9fb0d0;
+  --accent: #2dd4bf;
+  --accent-ink: #04201c;
+  --accent-soft: rgba(45, 212, 191, 0.12);
+  --warn: #fbbf24;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
 
-    projectsTitle: "Projects",
-    p0Title: "Project 00 – Linux & Shell",
-    p0Desc: "Command-line exercises covering the Linux file system, permissions, and shell scripting basics.",
-    p1Title: "Project 01 – Git Workflow",
-    p1Desc: "Practiced branching, commits, merging and pushing work to a remote repository.",
-    p2Title: "Project 02 – HTML Structure",
-    p2Desc: "Built semantic pages using headings, lists, tables, forms and accessible markup.",
-    p3Title: "Project 03 – CSS & JavaScript",
-    p3Desc: "Styled responsive layouts with Flexbox and added interactivity using DOM events.",
-    p4Title: "Graduation Project: Risk Assessment Tool",
-    p4Desc:
-      "Web-based risk evaluation platform. I analyzed user and system requirements, helped define features based on risk management and GRC principles, structured the assessment workflow, and documented the system.",
-    p5Title: "ISO 27001 GRC Capstone (FinTech)",
-    p5Desc:
-      "Capstone project from the SMT Group training covering ISMS scope, asset inventory, risk register and treatment plan, security policy, and an implementation roadmap.",
-    btnGithub: "View on GitHub",
-    btnDrive: "View on Google Drive",
+:root[data-theme="light"] {
+  --bg: #f7f8fb;
+  --bg-alt: #eef1f7;
+  --surface: #ffffff;
+  --surface-hover: #f3f6fb;
+  --border: #dbe1ee;
+  --text: #11192b;
+  --muted: #55627e;
+  --accent: #0f766e;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(15, 118, 110, 0.1);
+  --warn: #b45309;
+  --shadow: 0 10px 30px rgba(17, 25, 43, 0.1);
+}
 
-    trainingTitle: "Training",
-    t1Title: "Advanced Digital Skills: Web & Cybersecurity – Amman42",
-    t1Desc: "Advanced training program in web development and cybersecurity.",
-    t2Title: "Path2Cyber Program – GRC Trainee, SMT Group",
-    t2Desc:
-      "Practical training in GRC, ISO 27001, risk assessment & treatment, asset inventory, and policy development, with exposure to networking, Linux, and Windows Server.",
-    t3Title: "Cybersecurity Upskilling Program – Cyber Shield (JODB)",
-    t3Desc:
-      "Completed 120 hours of training in networking, Linux, ethical hacking, and digital forensics. Ranked #1 in the cohort with 98% — Highest Honors.",
+/* ---------- Reset / base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
 
-    certsTitle: "Certifications and Courses",
-    c1: "AWS Certified Cloud Practitioner",
-    c2: "Microsoft Certified: Azure Fundamentals (AZ-900)",
-    c3: "Microsoft Certified: Azure Administrator Associate (AZ-104)",
-    c4: "Red Hat System Administration I (RH124) – Course",
-    c5: "ISO/IEC 27001:2022 Lead Implementer – Udemy Course",
-    verify: "Verify on Credly",
-    inProgress: "In progress",
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
 
-    hobbiesTitle: "Hobbies",
-    hobby1: "🔐 Practicing security labs",
-    hobby2: "📚 Reading about cybersecurity",
-    hobby3: "💻 Building small web projects",
-    hobby4: "☁️ Exploring cloud platforms",
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: background-color var(--ease), color var(--ease);
+}
 
-    contactTitle: "Contact",
-    contactEmail: "Email",
-    contactPhone: "Phone",
-    labelName: "Your name",
-    labelEmail: "Your email",
-    labelMessage: "Message",
-    send: "Send message",
-    formOk: "Opening your email app…",
-    formErr: "Please fill in all fields with a valid email.",
+img { max-width: 100%; display: block; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, p { margin: 0; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
 
-    footer: "Jana Zeyad AL-Damanhouri",
-    langButton: "العربية",
-    themeToLight: "Switch to light theme",
-    themeToDark: "Switch to dark theme",
-    langLabel: "Switch language",
-    topLabel: "Back to top"
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
 
-   p0Title: "Project 00 – Linux & GitHub",
-   p0Desc: "Practiced Linux command-line operations, file management, and Git/GitHub version control.",
+.container { width: 100%; max-width: var(--max-w); margin-inline: auto; padding-inline: 24px; }
 
-   p1Title: "Project 01 – HTML",
-   p1Desc: "Built structured web pages using HTML elements, semantic markup, lists, tables, and forms.",
+.skip-link {
+  position: absolute;
+  inset-inline-start: 12px;
+  top: -60px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 8px 14px;
+  border-radius: 8px;
+  z-index: 200;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 10px; text-decoration: none; }
 
-   p2Title: "Project 02 – CSS",
-   p2Desc: "Practiced styling, Flexbox layouts, positioning, colors, and the CSS box model.",
+/* ---------- Header / Navbar ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  transition: background-color var(--ease), border-color var(--ease);
+}
 
-   p3Title: "Project 03 – JavaScript",
-   p3Desc: "Practiced JavaScript fundamentals, functions, DOM manipulation, events, and interactive elements.",
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
 
-  p6Title: "Project 04 – Personal Portfolio",
-  p6Desc: "Developed a responsive personal portfolio using HTML, CSS, and JavaScript, with language and theme switching.",
+.logo { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 700; font-size: 1.15rem; }
+.logo:hover { text-decoration: none; }
+.logo-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 10px;
+  background: var(--accent); color: var(--accent-ink);
+  font-family: var(--mono); font-weight: 800;
+}
+.logo-dot { color: var(--accent); }
 
-  },
+.nav-links { display: flex; align-items: center; gap: 4px; }
+.nav-links a {
+  display: block; padding: 8px 12px; border-radius: 8px;
+  color: var(--muted); font-size: 0.93rem; font-weight: 500;
+  transition: color var(--ease), background-color var(--ease);
+}
+.nav-links a:hover { color: var(--text); background: var(--accent-soft); text-decoration: none; }
+.nav-links a.active { color: var(--accent); background: var(--accent-soft); }
 
-  ar: {
-    pageTitle: "جنى زياد الدمنهوري | الملف الشخصي",
-    navAbout: "نبذة عني",
-    navSkills: "المهارات",
-    navProjects: "المشاريع",
-    navTraining: "التدريب",
-    navCerts: "الشهادات",
-    navHobbies: "الهوايات",
-    navContact: "تواصل معي",
-    navCv: "السيرة الذاتية",
+.controls { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 40px; height: 40px; padding: 0 10px;
+  background: var(--surface); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px;
+  font: inherit; font-size: 1.05rem; cursor: pointer;
+  transition: background-color var(--ease), transform 0.15s, border-color var(--ease);
+}
+.icon-btn:hover { background: var(--surface-hover); border-color: var(--accent); }
+.icon-btn:active { transform: scale(0.94); }
+.lang-btn { font-size: 0.9rem; font-weight: 600; }
 
-    name: "جنى زياد الدمنهوري",
-    role: "خريجة حديثة في الأمن السيبراني",
-    location: "عمّان، الأردن",
-    summary:
-      "خريجة أمن سيبراني لديها تدريب عملي في الأمن السيبراني والشبكات وإدارة أنظمة لينكس والحوكمة والمخاطر والامتثال (GRC) وأساسيات الحوسبة السحابية. ملمّة بمنهجية ISO 27001 وببيئات لينكس وويندوز والشبكات وAWS وAzure. تحليلية ودقيقة وحريصة على التعلّم والمساهمة في وظائف الأمن السيبراني أو GRC أو عمليات تقنية المعلومات أو الحوسبة السحابية.",
-    btnCv: "عرض سيرتي الذاتية (PDF)",
-    photoCasual: "عادية",
-    photoPro: "رسمية",
-    altCasual: "صورة شخصية عادية لجنى",
-    altPro: "صورة شخصية رسمية لجنى",
+.menu-btn { display: none; }
+.bars, .bars::before, .bars::after {
+  display: block; width: 18px; height: 2px; background: var(--text);
+  border-radius: 2px; transition: transform 0.25s, opacity 0.25s;
+}
+.bars { position: relative; }
+.bars::before, .bars::after { content: ""; position: absolute; inset-inline-start: 0; }
+.bars::before { top: -6px; }
+.bars::after { top: 6px; }
+.menu-btn[aria-expanded="true"] .bars { background: transparent; }
+.menu-btn[aria-expanded="true"] .bars::before { transform: translateY(6px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .bars::after { transform: translateY(-6px) rotate(-45deg); }
 
-    skillsTitle: "المهارات",
-    skillSec: "الأمن السيبراني والـ GRC",
-    skillNet: "الشبكات",
-    skillOs: "أنظمة التشغيل",
-    skillCloud: "الحوسبة السحابية",
-    skillWeb: "تطوير الويب",
-    skillGit: "التحكم بالإصدارات",
+/* ---------- Sections ---------- */
+.section { padding-block: 84px; }
+.section:nth-of-type(even) { background: var(--bg-alt); }
 
-    projectsTitle: "المشاريع",
-    p0Title: "المشروع 00 – لينكس وسطر الأوامر",
-    p0Desc: "تمارين على سطر الأوامر تغطي نظام ملفات لينكس والصلاحيات وأساسيات كتابة السكربتات.",
-    p1Title: "المشروع 01 – سير عمل Git",
-    p1Desc: "تدريب على الفروع والالتزامات (commits) والدمج ورفع العمل إلى مستودع بعيد.",
-    p2Title: "المشروع 02 – بنية HTML",
-    p2Desc: "بناء صفحات دلالية باستخدام العناوين والقوائم والجداول والنماذج وترميز سهل الوصول.",
-    p3Title: "المشروع 03 – CSS وJavaScript",
-    p3Desc: "تنسيق تخطيطات متجاوبة باستخدام Flexbox وإضافة التفاعل عبر أحداث DOM.",
-    p4Title: "مشروع التخرج: أداة تقييم المخاطر",
-    p4Desc:
-      "منصة ويب لتقييم المخاطر. حلّلت متطلبات المستخدمين والنظام، وساهمت في تحديد الميزات وفق مبادئ إدارة المخاطر والـ GRC، ونظّمت سير عملية التقييم، ووثّقت النظام.",
-    p5Title: "مشروع ISO 27001 GRC الختامي (FinTech)",
-    p5Desc:
-      "مشروع ختامي من تدريب SMT Group يشمل نطاق نظام إدارة أمن المعلومات، وجرد الأصول، وسجل المخاطر وخطة المعالجة، وسياسة الأمن، وخارطة طريق للتنفيذ.",
-    btnGithub: "عرض على GitHub",
-    btnDrive: "عرض على Google Drive",
+.section-title {
+  position: relative;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  margin-bottom: 40px;
+  padding-inline-start: 18px;
+}
+.section-title::before {
+  content: "";
+  position: absolute; inset-inline-start: 0; top: 0.2em; bottom: 0.2em;
+  width: 5px; border-radius: 4px; background: var(--accent);
+}
 
-    trainingTitle: "التدريب",
-    t1Title: "المهارات الرقمية المتقدمة: الويب والأمن السيبراني – Amman42",
-    t1Desc: "برنامج تدريبي متقدم في تطوير الويب والأمن السيبراني.",
-    t2Title: "برنامج Path2Cyber – متدربة GRC، SMT Group",
-    t2Desc:
-      "تدريب عملي في GRC وISO 27001 وتقييم المخاطر ومعالجتها وجرد الأصول وكتابة السياسات، مع اطلاع على الشبكات ولينكس وويندوز سيرفر.",
-    t3Title: "برنامج رفع المهارات في الأمن السيبراني – Cyber Shield (JODB)",
-    t3Desc:
-      "أتممت 120 ساعة تدريبية في الشبكات ولينكس والاختراق الأخلاقي والأدلة الجنائية الرقمية. حصلت على المرتبة الأولى في الدفعة بنسبة 98% – مرتبة الشرف الأعلى.",
+/* ---------- Hero / About ---------- */
+.hero { padding-block: 72px 90px; background: var(--bg) !important; }
+.hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 56px; }
+.hero-text { flex: 1 1 0; min-width: 0; }
 
-    certsTitle: "الشهادات والدورات",
-    c1: "AWS Certified Cloud Practitioner",
-    c2: "Microsoft Certified: Azure Fundamentals (AZ-900)",
-    c3: "Microsoft Certified: Azure Administrator Associate (AZ-104)",
-    c4: "Red Hat System Administration I (RH124) – دورة",
-    c5: "ISO/IEC 27001:2022 Lead Implementer – دورة على Udemy",
-    verify: "التحقق عبر Credly",
-    inProgress: "قيد الدراسة",
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px; margin-bottom: 18px;
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid var(--border); border-radius: 999px;
+  font-size: 0.85rem; font-weight: 600;
+}
+.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.8s infinite; }
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--accent); }
+  70% { box-shadow: 0 0 0 9px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
 
-    hobbiesTitle: "الهوايات",
-    hobby1: "🔐 التدرّب على مختبرات الأمن",
-    hobby2: "📚 القراءة عن الأمن السيبراني",
-    hobby3: "💻 بناء مشاريع ويب صغيرة",
-    hobby4: "☁️ استكشاف منصات السحابة",
+.name { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; letter-spacing: -0.5px; }
+.role { margin-top: 10px; font-size: clamp(1.1rem, 2.2vw, 1.4rem); color: var(--accent); font-weight: 600; }
+.location { margin-top: 6px; color: var(--muted); }
+.summary { margin-top: 20px; max-width: 62ch; color: var(--muted); font-size: 1.04rem; }
 
-    contactTitle: "تواصل معي",
-    contactEmail: "البريد الإلكتروني",
-    contactPhone: "الهاتف",
-    labelName: "اسمك",
-    labelEmail: "بريدك الإلكتروني",
-    labelMessage: "الرسالة",
-    send: "إرسال الرسالة",
-    formOk: "جارٍ فتح تطبيق البريد…",
-    formErr: "يرجى تعبئة جميع الحقول وإدخال بريد إلكتروني صحيح.",
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 
-    footer: "جنى زياد الدمنهوري",
-    langButton: "English",
-    themeToLight: "التبديل إلى الوضع الفاتح",
-    themeToDark: "التبديل إلى الوضع الداكن",
-    langLabel: "تغيير اللغة",
-    topLabel: "العودة للأعلى"
-    p0Title: "المشروع 00 – لينكس وGitHub",
-    p0Desc: "التدرب على أوامر لينكس وإدارة الملفات واستخدام Git وGitHub للتحكم بالإصدارات.",
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 24px; border-radius: 12px; border: 1px solid transparent;
+  font: inherit; font-weight: 600; cursor: pointer;
+  transition: transform 0.15s, background-color var(--ease), box-shadow var(--ease);
+}
+.btn:hover { text-decoration: none; transform: translateY(-2px); }
+.btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 6px 18px var(--accent-soft); }
+.btn-primary:hover { box-shadow: 0 10px 24px var(--accent-soft); }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-    p1Title: "المشروع 01 – HTML",
-   p1Desc: "إنشاء صفحات ويب منظمة باستخدام عناصر HTML والعناصر الدلالية والقوائم والجداول والنماذج.",
+.stats { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; padding-top: 26px; border-top: 1px solid var(--border); }
+.stat { display: flex; flex-direction: column; }
+.stat strong { font-family: var(--mono); font-size: 1.7rem; color: var(--accent); line-height: 1.2; }
+.stat span { font-size: 0.85rem; color: var(--muted); }
 
-   p2Title: "المشروع 02 – CSS",
-   p2Desc: "التدرب على تنسيق الصفحات وFlexbox وتحديد المواقع والألوان ونموذج الصندوق.",
+/* Photo + switcher (Bounce 01) */
+.photo-box { display: flex; flex-direction: column; align-items: center; gap: 20px; flex: 0 0 auto; }
+.photo-frame {
+  padding: 8px; border-radius: 50%;
+  background: conic-gradient(from 180deg, var(--accent), transparent 60%, var(--accent));
+  box-shadow: var(--shadow);
+}
+.profile-photo {
+  width: clamp(220px, 28vw, 320px); aspect-ratio: 1; object-fit: cover;
+  border-radius: 50%; border: 6px solid var(--bg); background: var(--surface);
+  /* smooth transition when the src/alt changes */
+  transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+}
+.profile-photo.fading { opacity: 0; transform: scale(0.95); filter: blur(4px); }
 
-   p3Title: "المشروع 03 – JavaScript",
-   p3Desc: "التدرب على أساسيات JavaScript والدوال والتعامل مع DOM والأحداث والعناصر التفاعلية.",
+.photo-buttons { display: flex; gap: 8px; padding: 5px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; }
+.chip {
+  padding: 8px 20px; border: 0; border-radius: 999px; background: transparent;
+  color: var(--muted); font: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+  transition: background-color var(--ease), color var(--ease);
+}
+.chip:hover { color: var(--text); }
+.chip.active { background: var(--accent); color: var(--accent-ink); }
 
-  p6Title: "المشروع 04 – البورتفوليو الشخصي",
-  p6Desc: "إنشاء بورتفوليو شخصي متجاوب باستخدام HTML وCSS وJavaScript، مع دعم تبديل اللغة والمظهر.",
+/* ---------- Skills ---------- */
+.skills-grid { display: flex; flex-wrap: wrap; gap: 20px; }
+.skill-card {
+  flex: 1 1 300px;
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 26px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  transition: transform var(--ease), border-color var(--ease), background-color var(--ease);
+}
+.skill-card:hover { transform: translateY(-5px); border-color: var(--accent); background: var(--surface-hover); }
+.skill-icon { font-size: 1.8rem; line-height: 1; margin-bottom: 6px; }
+.skill-card h3 { font-size: 1.12rem; }
+.skill-card p { color: var(--muted); font-family: var(--mono); font-size: 0.88rem; }
 
+/* ---------- Projects ---------- */
+.card-container { display: flex; flex-wrap: wrap; gap: 22px; }
+.card {
+  flex: 1 1 320px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+  padding: 26px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
+}
+.card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow); }
+.card-featured { flex-basis: 480px; background: linear-gradient(160deg, var(--surface), var(--accent-soft)); }
+.card-tag {
+  padding: 2px 12px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent);
+  font-family: var(--mono); font-size: 0.8rem; font-weight: 700;
+}
+.card h3 { font-size: 1.15rem; line-height: 1.4; }
+.card p { color: var(--muted); font-size: 0.97rem; flex: 1; }
+.card-link {
+  margin-top: 4px; padding: 8px 16px; border: 1px solid var(--border);
+  border-radius: 10px; font-weight: 600; font-size: 0.9rem; color: var(--text);
+  transition: background-color var(--ease), color var(--ease), border-color var(--ease);
+}
+.card-link:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); text-decoration: none; }
+
+/* ---------- Training timeline ---------- */
+.timeline { position: relative; display: flex; flex-direction: column; gap: 28px; padding-inline-start: 34px; }
+.timeline::before {
+  content: ""; position: absolute; top: 6px; bottom: 6px; inset-inline-start: 7px;
+  width: 2px; background: var(--border);
+}
+.timeline-item {
+  position: relative; padding: 22px 24px;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.timeline-item::before {
+  content: ""; position: absolute; top: 28px; inset-inline-start: -34px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--accent); border: 4px solid var(--bg-alt); box-sizing: content-box;
+  transform: translateX(-4px);
+}
+[dir="rtl"] .timeline-item::before { transform: translateX(4px); }
+.timeline-item h3 { font-size: 1.1rem; margin-block: 4px 6px; }
+.timeline-item p { color: var(--muted); }
+.timeline-item .date { color: var(--accent); font-family: var(--mono); font-size: 0.85rem; font-weight: 600; }
+
+/* ---------- Certifications ---------- */
+.cert-list { display: flex; flex-direction: column; gap: 12px; }
+.cert-item {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding: 18px 22px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  transition: border-color var(--ease);
+}
+.cert-item:hover { border-color: var(--accent); }
+.cert-name { font-weight: 600; }
+.cert-link { font-size: 0.9rem; font-weight: 600; }
+.status {
+  padding: 3px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700;
+  color: var(--warn); background: color-mix(in srgb, var(--warn) 14%, transparent);
+}
+.status-done { color: var(--muted); background: var(--accent-soft); }
+
+/* ---------- Hobbies ---------- */
+.hobbies-list { display: flex; flex-wrap: wrap; gap: 14px; }
+.hobby {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 14px 24px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 999px; font-weight: 500;
+  transition: transform var(--ease), border-color var(--ease);
+}
+.hobby:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+/* ---------- Contact ---------- */
+.contact-wrap { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.contact-list { flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px; }
+.contact-row {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 16px 20px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.contact-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+.contact-row a { font-weight: 600; word-break: break-all; }
+
+.contact-form {
+  flex: 1 1 380px; display: flex; flex-direction: column; gap: 18px;
+  padding: 28px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field label { font-weight: 600; font-size: 0.92rem; }
+.field input, .field textarea {
+  width: 100%; padding: 12px 14px; font: inherit; color: var(--text);
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  transition: border-color var(--ease), box-shadow var(--ease);
+}
+.field textarea { resize: vertical; min-height: 120px; }
+.field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.field.invalid input, .field.invalid textarea { border-color: #ef4444; }
+.form-status { min-height: 1.5em; font-weight: 600; font-size: 0.93rem; }
+.form-status.ok { color: var(--accent); }
+.form-status.err { color: #ef4444; }
+.contact-form .btn { align-self: flex-start; }
+
+/* ---------- Footer ---------- */
+.site-footer { padding-block: 30px; border-top: 1px solid var(--border); background: var(--bg); color: var(--muted); font-size: 0.9rem; }
+.footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+
+/* ---------- Back to top ---------- */
+.back-to-top {
+  position: fixed; bottom: 24px; inset-inline-end: 24px;
+  width: 46px; height: 46px; border: 0; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  font-size: 1.3rem; font-weight: 700; cursor: pointer; box-shadow: var(--shadow);
+  opacity: 0; visibility: hidden; transform: translateY(12px);
+  transition: opacity var(--ease), transform var(--ease), visibility var(--ease);
+}
+.back-to-top.show { opacity: 1; visibility: visible; transform: none; }
+
+/* ---------- RTL tweaks ---------- */
+[dir="rtl"] .logo-text { letter-spacing: 0; }
+[dir="rtl"] .name { letter-spacing: 0; }
+[dir="rtl"] .contact-label { letter-spacing: 0; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1020px) {
+  .nav-links a { padding: 8px 9px; font-size: 0.88rem; }
+}
+
+@media (max-width: 900px) {
+  .menu-btn { display: inline-flex; }
+
+  .nav-links {
+    position: absolute; top: var(--header-h); inset-inline: 0;
+    flex-direction: column; align-items: stretch; gap: 2px;
+    padding: 12px 24px 18px;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: none;
   }
-};
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 12px 14px; font-size: 1rem; }
 
-/* =========================================================
-   2. Elements and state
-   ========================================================= */
-const root = document.documentElement;
-const themeBtn = document.getElementById("theme-toggle");
-const langBtn = document.getElementById("lang-toggle");
-const photoEl = document.getElementById("profile-photo");
-const photoButtons = document.querySelectorAll("[data-photo]");
-const form = document.getElementById("contact-form");
-const formStatus = document.getElementById("form-status");
-const footerText = document.getElementById("footer-text");
-const backToTop = document.getElementById("back-to-top");
-
-const photos = {
-  casual: { src: "assets/photo-casual.svg", altKey: "altCasual" },
-  professional: { src: "assets/photo-professional.jpg", altKey: "altPro" }
-};
-
-let currentLang = "en";
-let currentPhoto = "professional";
-
-/* localStorage can be blocked, so wrap it */
-function save(key, value) {
-  try { localStorage.setItem(key, value); } catch (e) { /* ignore */ }
-}
-function load(key) {
-  try { return localStorage.getItem(key); } catch (e) { return null; }
+  .hero-inner { flex-direction: column-reverse; text-align: center; gap: 36px; }
+  .summary { margin-inline: auto; }
+  .hero-actions, .stats { justify-content: center; }
+  .stat { align-items: center; }
+  .section { padding-block: 60px; }
 }
 
-function t(key) {
-  return translations[currentLang][key];
+@media (max-width: 560px) {
+  .container, .nav { padding-inline: 16px; }
+  .card, .skill-card, .card-featured { flex-basis: 100%; }
+  .contact-form { padding: 20px; }
+  .contact-form .btn, .hero-actions .btn { width: 100%; }
+  .timeline { padding-inline-start: 28px; }
+  .timeline-item::before { inset-inline-start: -28px; }
+  .footer-inner { flex-direction: column; text-align: center; }
 }
 
-/* =========================================================
-   3. Theme switcher
-   Click -> event -> callback -> data-theme changes ->
-   CSS variables are recalculated -> page repaints
-   ========================================================= */
-function applyTheme(theme) {
-  root.dataset.theme = theme;
-  themeBtn.textContent = theme === "dark" ? "☀️" : "🌙";
-  themeBtn.setAttribute("aria-label", theme === "dark" ? t("themeToLight") : t("themeToDark"));
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
-
-function toggleTheme() {
-  const next = root.dataset.theme === "dark" ? "light" : "dark";
-  applyTheme(next);
-  save("theme", next);
-}
-
-themeBtn.addEventListener("click", toggleTheme);
-
-/* =========================================================
-   4. Language switcher (EN / AR + RTL)
-   ========================================================= */
-function applyLanguage(lang) {
-  currentLang = lang;
-
-  root.lang = lang;
-  root.dir = lang === "ar" ? "rtl" : "ltr";
-
-  document.querySelectorAll("[data-i18n]").forEach(function (el) {
-    const key = el.dataset.i18n;
-    if (translations[lang][key] !== undefined) {
-      el.textContent = translations[lang][key];
-    }
-  });
-
-  document.title = t("pageTitle");
-  footerText.textContent = "© " + new Date().getFullYear() + " " + t("footer");
-  langBtn.textContent = t("langButton");
-  langBtn.setAttribute("aria-label", t("langLabel"));
-  backToTop.setAttribute("aria-label", t("topLabel"));
-  photoEl.alt = t(photos[currentPhoto].altKey);
-  formStatus.textContent = "";
-  formStatus.className = "form-status";
-
-  applyTheme(root.dataset.theme); /* refresh the translated aria-label */
-}
-
-function toggleLanguage() {
-  const next = currentLang === "en" ? "ar" : "en";
-  applyLanguage(next);
-  save("lang", next);
-}
-
-langBtn.addEventListener("click", toggleLanguage);
-
-/* =========================================================
-   5. Profile photo switcher (Bounce 01)
-   Fade out -> change src and alt -> fade in. No page reload.
-   ========================================================= */
-function switchPhoto(name) {
-  if (name === currentPhoto || !photos[name]) return;
-  currentPhoto = name;
-
-  photoButtons.forEach(function (btn) {
-    btn.classList.toggle("active", btn.dataset.photo === name);
-  });
-
-  photoEl.classList.add("fading");
-
-  /* wait for the opacity transition (0.35s) to finish */
-  setTimeout(function () {
-    photoEl.addEventListener(
-      "load",
-      function () { photoEl.classList.remove("fading"); },
-      { once: true }
-    );
-    photoEl.src = photos[name].src;
-    photoEl.alt = t(photos[name].altKey);
-  }, 350);
-}
-
-photoButtons.forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    switchPhoto(btn.dataset.photo);
-  });
-});
-
-/* =========================================================
-   6. Contact form (validates, then opens the email app)
-   ========================================================= */
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const fields = form.querySelectorAll("input, textarea");
-  let valid = true;
-
-  fields.forEach(function (field) {
-    const ok = field.checkValidity();
-    field.classList.toggle("invalid", !ok);
-    if (!ok) valid = false;
-  });
-
-  if (!valid) {
-    formStatus.textContent = t("formErr");
-    formStatus.className = "form-status error";
-    return;
-  }
-
-  const name = form.elements["name"].value.trim();
-  const email = form.elements["email"].value.trim();
-  const message = form.elements["message"].value.trim();
-
-  const subject = encodeURIComponent("Portfolio message from " + name);
-  const body = encodeURIComponent(message + "\n\n" + name + " (" + email + ")");
-
-  formStatus.textContent = t("formOk");
-  formStatus.className = "form-status ok";
-  window.location.href = "mailto:jana.cyber.tech@gmail.com?subject=" + subject + "&body=" + body;
-  form.reset();
-});
-
-/* =========================================================
-   7. Back to top button
-   ========================================================= */
-function toggleBackToTop() {
-  backToTop.classList.toggle("visible", window.scrollY > 300);
-}
-
-window.addEventListener("scroll", toggleBackToTop);
-backToTop.addEventListener("click", function () {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
-
-/* =========================================================
-   8. Start-up: restore the saved choices
-   ========================================================= */
-const savedTheme = load("theme");
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-root.dataset.theme = savedTheme || (prefersDark ? "dark" : "light");
-
-applyLanguage(load("lang") === "ar" ? "ar" : "en");
-toggleBackToTop();
