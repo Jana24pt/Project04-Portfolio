@@ -1,417 +1,419 @@
 /* =========================================================
-   Jana AL-Damanhouri – Portfolio
-   Hand-written CSS3: custom properties, Flexbox, media queries.
-   Logical properties (inline-start / inline-end) are used so the
-   layout flips cleanly between LTR (English) and RTL (Arabic).
+   Jana AL-Damanhouri – Portfolio  |  script.js
+   Vanilla JavaScript (ES6+), no libraries.
+
+   Event lifecycle used everywhere in this file:
+     User action  ->  Event fires  ->  JS callback runs
+                  ->  DOM / CSS mutation  ->  user sees the change
    ========================================================= */
 
-/* ---------- Theme tokens ---------- */
-:root {
-  --radius: 16px;
-  --radius-sm: 10px;
-  --max-w: 1120px;
-  --header-h: 68px;
-  --ease: 0.3s ease;
-  --font: "Segoe UI", "Noto Sans Arabic", Tahoma, system-ui, -apple-system, Arial, sans-serif;
-  --mono: ui-monospace, "SFMono-Regular", Consolas, "Courier New", monospace;
-}
+"use strict";
 
-:root[data-theme="dark"] {
-  --bg: #0b1220;
-  --bg-alt: #0f1a2e;
-  --surface: #131f36;
-  --surface-hover: #182744;
-  --border: #22314f;
-  --text: #e8eefc;
-  --muted: #9fb0d0;
-  --accent: #2dd4bf;
-  --accent-ink: #04201c;
-  --accent-soft: rgba(45, 212, 191, 0.12);
-  --warn: #fbbf24;
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
+/* ---------------------------------------------------------
+   1. Translation dictionary (Bounce 02)
+   Keys match the data-i18n attributes in index.html.
+   --------------------------------------------------------- */
+const translations = {
+  en: {
+    pageTitle: "Jana AL-Damanhouri | Portfolio",
+    skip: "Skip to content",
+    navAbout: "About", navSkills: "Skills", navProjects: "Projects",
+    navTraining: "Training", navCerts: "Certifications",
+    navHobbies: "Hobbies", navContact: "Contact",
+    themeLabel: "Switch theme", menuLabel: "Menu", topLabel: "Back to top",
+    langButton: "العربية", langLabel: "Switch to Arabic",
 
-:root[data-theme="light"] {
-  --bg: #f7f8fb;
-  --bg-alt: #eef1f7;
-  --surface: #ffffff;
-  --surface-hover: #f3f6fb;
-  --border: #dbe1ee;
-  --text: #11192b;
-  --muted: #55627e;
-  --accent: #0f766e;
-  --accent-ink: #ffffff;
-  --accent-soft: rgba(15, 118, 110, 0.1);
-  --warn: #b45309;
-  --shadow: 0 10px 30px rgba(17, 25, 43, 0.1);
-}
+    eyebrow: "Open to Cybersecurity · GRC · Cloud roles",
+    name: "Jana Zeyad AL-Damanhouri",
+    role: "Fresh Cyber Security Graduate",
+    location: "Amman, Jordan",
+    summary:
+      "Cybersecurity graduate with hands-on training in cybersecurity, networking, Linux administration, GRC, and cloud fundamentals. Familiar with ISO 27001 methodology, Linux and Windows environments, networking, AWS, and Azure. Analytical, detail-oriented, and eager to learn and contribute in Cybersecurity, GRC, IT Operations, or Cloud roles.",
+    btnCv: "View my CV (PDF)", btnContact: "Get in touch",
+    stat1: "Cyber Shield – ranked 1st", stat2: "Hands-on training", stat3: "Cloud certifications",
+    photoGroup: "Profile photo style", photoCasual: "Casual", photoPro: "Professional",
+    altCasual: "Casual profile photo of Jana",
+    altPro: "Professional profile photo of Jana",
 
-/* ---------- Reset / base ---------- */
-*, *::before, *::after { box-sizing: border-box; }
+    skillsTitle: "Skills",
+    skillSec: "Cybersecurity & GRC", skillNet: "Networking",
+    skillOs: "Operating Systems", skillCloud: "Cloud",
+    skillWeb: "Web Development", skillGit: "Version Control",
 
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
+    projectsTitle: "Projects",
+    p0Title: "Project 00 – Linux & GitHub",
+    p0Desc: "Practiced Linux command-line operations, file management, and GitHub repository workflows.",
+    p1Title: "Project 01 – HTML Fundamentals",
+    p1Desc: "Built web pages using HTML structure, semantic elements, lists, tables, forms, and accessible markup.",
+    p2Title: "Project 02 – CSS & Visual Presentation",
+    p2Desc: "Practiced CSS styling, Flexbox layouts, positioning, shapes, colors, and the box model.",
+    p3Title: "Project 03 – JavaScript Fundamentals",
+    p3Desc: "Practiced JavaScript variables, functions, conditions, DOM manipulation, event handling, and interactive applications.",
+    p4Title: "Project 04 – Portfolio Website",
+    p4Desc: "Developed a personal portfolio using HTML, CSS, and JavaScript to present my skills, training, and projects.",
+    p5Title: "Graduation Project: Risk Assessment Tool",
+    p5Desc: "Web-based risk evaluation platform. I analyzed user and system requirements, helped define features based on risk management and GRC principles, structured the assessment workflow, and documented the system.",
+    p6Title: "ISO 27001 GRC Capstone (FinTech)",
+    p6Desc: "Capstone project from SMT Group training covering ISMS scope, asset inventory, risk register and treatment plan, security policy, and an implementation roadmap.",
+    tagGrad: "Graduation", tagGrc: "GRC",
+    btnGithub: "View on GitHub", btnDrive: "View on Google Drive",
 
-body {
-  margin: 0;
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.7;
-  transition: background-color var(--ease), color var(--ease);
-}
+    trainingTitle: "Training",
+    t1Title: "Advanced Digital Skills: Web & Cybersecurity – Amman42",
+    t1Desc: "Advanced training program in web development and cybersecurity.",
+    t2Title: "Path2Cyber Program – GRC Trainee, SMT Group",
+    t2Desc: "Practical training in GRC, ISO 27001, risk assessment and treatment, asset inventory, policy development, networking, Linux, and Windows Server.",
+    t3Title: "Cybersecurity Upskilling Program – Cyber Shield (JODB)",
+    t3Desc: "Completed 120 hours of training in networking, Linux, ethical hacking, and digital forensics. Ranked first in the cohort with 98% — Highest Honors.",
 
-img { max-width: 100%; display: block; }
-ul, ol { list-style: none; margin: 0; padding: 0; }
-h1, h2, h3, p { margin: 0; }
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+    certsTitle: "Certifications and Courses",
+    c1: "AWS Certified Cloud Practitioner",
+    c2: "Microsoft Certified: Azure Fundamentals (AZ-900)",
+    c3: "Microsoft Certified: Azure Administrator Associate (AZ-104)",
+    c4: "Red Hat System Administration I (RH124) – Course",
+    c5: "ISO/IEC 27001:2022 Lead Implementer – Udemy Course",
+    verify: "Verify on Credly", inProgress: "In progress", course: "Course",
 
-:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
+    hobbiesTitle: "Hobbies",
+    hobby1: "Practicing security labs", hobby2: "Reading about cybersecurity",
+    hobby3: "Building small web projects", hobby4: "Exploring cloud platforms",
 
-.container { width: 100%; max-width: var(--max-w); margin-inline: auto; padding-inline: 24px; }
+    contactTitle: "Contact",
+    contactEmail: "Email", contactPhone: "Phone",
+    labelName: "Your name", labelEmail: "Your email", labelMessage: "Message",
+    send: "Send message",
+    errName: "Please enter your name.",
+    errEmail: "Please enter a valid email address.",
+    errMessage: "Please write a message.",
+    formOk: "Opening your email app to send the message…",
 
-.skip-link {
-  position: absolute;
-  inset-inline-start: 12px;
-  top: -60px;
-  background: var(--accent);
-  color: var(--accent-ink);
-  padding: 8px 14px;
-  border-radius: 8px;
-  z-index: 200;
-  transition: top 0.2s;
-}
-.skip-link:focus { top: 10px; text-decoration: none; }
+    footerText: "© {year} Jana Zeyad AL-Damanhouri",
+    footerNote: "Built by hand with HTML, CSS & JavaScript.",
+    themeToLight: "Switch to light theme", themeToDark: "Switch to dark theme"
+  },
 
-/* ---------- Header / Navbar ---------- */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  height: var(--header-h);
-  background: color-mix(in srgb, var(--bg) 85%, transparent);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  transition: background-color var(--ease), border-color var(--ease);
-}
+  ar: {
+    pageTitle: "جنى الدمنهوري | معرض الأعمال",
+    skip: "تخطَّ إلى المحتوى",
+    navAbout: "نبذة", navSkills: "المهارات", navProjects: "المشاريع",
+    navTraining: "التدريب", navCerts: "الشهادات",
+    navHobbies: "الهوايات", navContact: "تواصل",
+    themeLabel: "تبديل المظهر", menuLabel: "القائمة", topLabel: "العودة للأعلى",
+    langButton: "English", langLabel: "التبديل إلى الإنجليزية",
 
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  height: 100%;
-  max-width: var(--max-w);
-  margin-inline: auto;
-  padding-inline: 24px;
-}
+    eyebrow: "متاحة لوظائف الأمن السيبراني · الحوكمة والمخاطر والامتثال · السحابة",
+    name: "جنى زياد الدمنهوري",
+    role: "خريجة حديثة في الأمن السيبراني",
+    location: "عمّان، الأردن",
+    summary:
+      "خريجة أمن سيبراني لديها تدريب عملي في الأمن السيبراني والشبكات وإدارة أنظمة لينكس والحوكمة والمخاطر والامتثال (GRC) وأساسيات الحوسبة السحابية. ملمّة بمنهجية ISO 27001 وبيئات لينكس وويندوز والشبكات وAWS وAzure. تحليلية ودقيقة وشغوفة بالتعلّم والمساهمة في وظائف الأمن السيبراني والـ GRC وعمليات تقنية المعلومات والسحابة.",
+    btnCv: "عرض سيرتي الذاتية (PDF)", btnContact: "تواصل معي",
+    stat1: "Cyber Shield – المركز الأول", stat2: "تدريب عملي", stat3: "شهادات سحابية",
+    photoGroup: "نمط الصورة الشخصية", photoCasual: "عادية", photoPro: "رسمية",
+    altCasual: "صورة شخصية عادية لجنى",
+    altPro: "صورة شخصية رسمية لجنى",
 
-.logo { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 700; font-size: 1.15rem; }
-.logo:hover { text-decoration: none; }
-.logo-mark {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 36px; height: 36px; border-radius: 10px;
-  background: var(--accent); color: var(--accent-ink);
-  font-family: var(--mono); font-weight: 800;
-}
-.logo-dot { color: var(--accent); }
+    skillsTitle: "المهارات",
+    skillSec: "الأمن السيبراني والـ GRC", skillNet: "الشبكات",
+    skillOs: "أنظمة التشغيل", skillCloud: "الحوسبة السحابية",
+    skillWeb: "تطوير الويب", skillGit: "التحكم بالإصدارات",
 
-.nav-links { display: flex; align-items: center; gap: 4px; }
-.nav-links a {
-  display: block; padding: 8px 12px; border-radius: 8px;
-  color: var(--muted); font-size: 0.93rem; font-weight: 500;
-  transition: color var(--ease), background-color var(--ease);
-}
-.nav-links a:hover { color: var(--text); background: var(--accent-soft); text-decoration: none; }
-.nav-links a.active { color: var(--accent); background: var(--accent-soft); }
+    projectsTitle: "المشاريع",
+    p0Title: "المشروع 00 – لينكس وGitHub",
+    p0Desc: "تدرّبت على أوامر لينكس وإدارة الملفات وآلية العمل مع مستودعات GitHub.",
+    p1Title: "المشروع 01 – أساسيات HTML",
+    p1Desc: "بنيت صفحات ويب باستخدام بنية HTML والعناصر الدلالية والقوائم والجداول والنماذج وترميز سهل الوصول.",
+    p2Title: "المشروع 02 – CSS والعرض البصري",
+    p2Desc: "تدرّبت على تنسيق CSS وتخطيطات Flexbox والتموضع والأشكال والألوان ونموذج الصندوق.",
+    p3Title: "المشروع 03 – أساسيات JavaScript",
+    p3Desc: "تدرّبت على المتغيرات والدوال والشروط والتعامل مع DOM ومعالجة الأحداث وبناء تطبيقات تفاعلية.",
+    p4Title: "المشروع 04 – موقع المعرض الشخصي",
+    p4Desc: "طوّرت معرضًا شخصيًا باستخدام HTML وCSS وJavaScript لعرض مهاراتي وتدريبي ومشاريعي.",
+    p5Title: "مشروع التخرج: أداة تقييم المخاطر",
+    p5Desc: "منصة ويب لتقييم المخاطر. حلّلت متطلبات المستخدم والنظام، وساهمت في تحديد المزايا وفق مبادئ إدارة المخاطر والـ GRC، ونظّمت مسار التقييم، ووثّقت النظام.",
+    p6Title: "مشروع ISO 27001 الختامي (التقنية المالية)",
+    p6Desc: "مشروع ختامي من تدريب SMT Group يشمل نطاق نظام إدارة أمن المعلومات (ISMS)، وجرد الأصول، وسجل المخاطر وخطة المعالجة، وسياسة الأمن، وخارطة طريق التنفيذ.",
+    tagGrad: "التخرج", tagGrc: "GRC",
+    btnGithub: "عرض على GitHub", btnDrive: "عرض على Google Drive",
 
-.controls { display: flex; align-items: center; gap: 8px; }
-.icon-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 40px; height: 40px; padding: 0 10px;
-  background: var(--surface); color: var(--text);
-  border: 1px solid var(--border); border-radius: 10px;
-  font: inherit; font-size: 1.05rem; cursor: pointer;
-  transition: background-color var(--ease), transform 0.15s, border-color var(--ease);
-}
-.icon-btn:hover { background: var(--surface-hover); border-color: var(--accent); }
-.icon-btn:active { transform: scale(0.94); }
-.lang-btn { font-size: 0.9rem; font-weight: 600; }
+    trainingTitle: "التدريب",
+    t1Title: "المهارات الرقمية المتقدمة: الويب والأمن السيبراني – Amman42",
+    t1Desc: "برنامج تدريبي متقدم في تطوير الويب والأمن السيبراني.",
+    t2Title: "برنامج Path2Cyber – متدرّبة GRC، SMT Group",
+    t2Desc: "تدريب عملي في الـ GRC وISO 27001 وتقييم المخاطر ومعالجتها وجرد الأصول وصياغة السياسات والشبكات ولينكس وويندوز سيرفر.",
+    t3Title: "برنامج رفع المهارات في الأمن السيبراني – Cyber Shield (JODB)",
+    t3Desc: "أنهيت 120 ساعة تدريبية في الشبكات ولينكس والاختراق الأخلاقي والتحقيق الرقمي. حصلت على المركز الأول في الدفعة بنسبة 98% — مرتبة الشرف العليا.",
 
-.menu-btn { display: none; }
-.bars, .bars::before, .bars::after {
-  display: block; width: 18px; height: 2px; background: var(--text);
-  border-radius: 2px; transition: transform 0.25s, opacity 0.25s;
-}
-.bars { position: relative; }
-.bars::before, .bars::after { content: ""; position: absolute; inset-inline-start: 0; }
-.bars::before { top: -6px; }
-.bars::after { top: 6px; }
-.menu-btn[aria-expanded="true"] .bars { background: transparent; }
-.menu-btn[aria-expanded="true"] .bars::before { transform: translateY(6px) rotate(45deg); }
-.menu-btn[aria-expanded="true"] .bars::after { transform: translateY(-6px) rotate(-45deg); }
+    certsTitle: "الشهادات والدورات",
+    c1: "AWS Certified Cloud Practitioner",
+    c2: "Microsoft Certified: Azure Fundamentals (AZ-900)",
+    c3: "Microsoft Certified: Azure Administrator Associate (AZ-104)",
+    c4: "Red Hat System Administration I (RH124) – دورة",
+    c5: "ISO/IEC 27001:2022 Lead Implementer – دورة Udemy",
+    verify: "تحقق عبر Credly", inProgress: "قيد الدراسة", course: "دورة",
 
-/* ---------- Sections ---------- */
-.section { padding-block: 84px; }
-.section:nth-of-type(even) { background: var(--bg-alt); }
+    hobbiesTitle: "الهوايات",
+    hobby1: "التدرّب على مختبرات الأمن", hobby2: "القراءة عن الأمن السيبراني",
+    hobby3: "بناء مشاريع ويب صغيرة", hobby4: "استكشاف المنصات السحابية",
 
-.section-title {
-  position: relative;
-  font-size: clamp(1.6rem, 3vw, 2.1rem);
-  margin-bottom: 40px;
-  padding-inline-start: 18px;
-}
-.section-title::before {
-  content: "";
-  position: absolute; inset-inline-start: 0; top: 0.2em; bottom: 0.2em;
-  width: 5px; border-radius: 4px; background: var(--accent);
-}
+    contactTitle: "تواصل معي",
+    contactEmail: "البريد الإلكتروني", contactPhone: "الهاتف",
+    labelName: "اسمك", labelEmail: "بريدك الإلكتروني", labelMessage: "الرسالة",
+    send: "إرسال الرسالة",
+    errName: "يرجى إدخال اسمك.",
+    errEmail: "يرجى إدخال بريد إلكتروني صحيح.",
+    errMessage: "يرجى كتابة رسالة.",
+    formOk: "جارٍ فتح تطبيق البريد لإرسال الرسالة…",
 
-/* ---------- Hero / About ---------- */
-.hero { padding-block: 72px 90px; background: var(--bg) !important; }
-.hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 56px; }
-.hero-text { flex: 1 1 0; min-width: 0; }
-
-.eyebrow {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 6px 14px; margin-bottom: 18px;
-  background: var(--accent-soft); color: var(--accent);
-  border: 1px solid var(--border); border-radius: 999px;
-  font-size: 0.85rem; font-weight: 600;
-}
-.pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 1.8s infinite; }
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 var(--accent); }
-  70% { box-shadow: 0 0 0 9px transparent; }
-  100% { box-shadow: 0 0 0 0 transparent; }
-}
-
-.name { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; letter-spacing: -0.5px; }
-.role { margin-top: 10px; font-size: clamp(1.1rem, 2.2vw, 1.4rem); color: var(--accent); font-weight: 600; }
-.location { margin-top: 6px; color: var(--muted); }
-.summary { margin-top: 20px; max-width: 62ch; color: var(--muted); font-size: 1.04rem; }
-
-.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-
-.btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 12px 24px; border-radius: 12px; border: 1px solid transparent;
-  font: inherit; font-weight: 600; cursor: pointer;
-  transition: transform 0.15s, background-color var(--ease), box-shadow var(--ease);
-}
-.btn:hover { text-decoration: none; transform: translateY(-2px); }
-.btn-primary { background: var(--accent); color: var(--accent-ink); box-shadow: 0 6px 18px var(--accent-soft); }
-.btn-primary:hover { box-shadow: 0 10px 24px var(--accent-soft); }
-.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-.stats { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 36px; padding-top: 26px; border-top: 1px solid var(--border); }
-.stat { display: flex; flex-direction: column; }
-.stat strong { font-family: var(--mono); font-size: 1.7rem; color: var(--accent); line-height: 1.2; }
-.stat span { font-size: 0.85rem; color: var(--muted); }
-
-/* Photo + switcher (Bounce 01) */
-.photo-box { display: flex; flex-direction: column; align-items: center; gap: 20px; flex: 0 0 auto; }
-.photo-frame {
-  padding: 8px; border-radius: 50%;
-  background: conic-gradient(from 180deg, var(--accent), transparent 60%, var(--accent));
-  box-shadow: var(--shadow);
-}
-.profile-photo {
-  width: clamp(220px, 28vw, 320px); aspect-ratio: 1; object-fit: cover;
-  border-radius: 50%; border: 6px solid var(--bg); background: var(--surface);
-  /* smooth transition when the src/alt changes */
-  transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
-}
-.profile-photo.fading { opacity: 0; transform: scale(0.95); filter: blur(4px); }
-
-.photo-buttons { display: flex; gap: 8px; padding: 5px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; }
-.chip {
-  padding: 8px 20px; border: 0; border-radius: 999px; background: transparent;
-  color: var(--muted); font: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
-  transition: background-color var(--ease), color var(--ease);
-}
-.chip:hover { color: var(--text); }
-.chip.active { background: var(--accent); color: var(--accent-ink); }
-
-/* ---------- Skills ---------- */
-.skills-grid { display: flex; flex-wrap: wrap; gap: 20px; }
-.skill-card {
-  flex: 1 1 300px;
-  display: flex; flex-direction: column; gap: 6px;
-  padding: 26px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius);
-  transition: transform var(--ease), border-color var(--ease), background-color var(--ease);
-}
-.skill-card:hover { transform: translateY(-5px); border-color: var(--accent); background: var(--surface-hover); }
-.skill-icon { font-size: 1.8rem; line-height: 1; margin-bottom: 6px; }
-.skill-card h3 { font-size: 1.12rem; }
-.skill-card p { color: var(--muted); font-family: var(--mono); font-size: 0.88rem; }
-
-/* ---------- Projects ---------- */
-.card-container { display: flex; flex-wrap: wrap; gap: 22px; }
-.card {
-  flex: 1 1 320px;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
-  padding: 26px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius);
-  transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
-}
-.card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow); }
-.card-featured { flex-basis: 480px; background: linear-gradient(160deg, var(--surface), var(--accent-soft)); }
-.card-tag {
-  padding: 2px 12px; border-radius: 999px;
-  background: var(--accent-soft); color: var(--accent);
-  font-family: var(--mono); font-size: 0.8rem; font-weight: 700;
-}
-.card h3 { font-size: 1.15rem; line-height: 1.4; }
-.card p { color: var(--muted); font-size: 0.97rem; flex: 1; }
-.card-link {
-  margin-top: 4px; padding: 8px 16px; border: 1px solid var(--border);
-  border-radius: 10px; font-weight: 600; font-size: 0.9rem; color: var(--text);
-  transition: background-color var(--ease), color var(--ease), border-color var(--ease);
-}
-.card-link:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); text-decoration: none; }
-
-/* ---------- Training timeline ---------- */
-.timeline { position: relative; display: flex; flex-direction: column; gap: 28px; padding-inline-start: 34px; }
-.timeline::before {
-  content: ""; position: absolute; top: 6px; bottom: 6px; inset-inline-start: 7px;
-  width: 2px; background: var(--border);
-}
-.timeline-item {
-  position: relative; padding: 22px 24px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-}
-.timeline-item::before {
-  content: ""; position: absolute; top: 28px; inset-inline-start: -34px;
-  width: 16px; height: 16px; border-radius: 50%;
-  background: var(--accent); border: 4px solid var(--bg-alt); box-sizing: content-box;
-  transform: translateX(-4px);
-}
-[dir="rtl"] .timeline-item::before { transform: translateX(4px); }
-.timeline-item h3 { font-size: 1.1rem; margin-block: 4px 6px; }
-.timeline-item p { color: var(--muted); }
-.timeline-item .date { color: var(--accent); font-family: var(--mono); font-size: 0.85rem; font-weight: 600; }
-
-/* ---------- Certifications ---------- */
-.cert-list { display: flex; flex-direction: column; gap: 12px; }
-.cert-item {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-  padding: 18px 22px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-  transition: border-color var(--ease);
-}
-.cert-item:hover { border-color: var(--accent); }
-.cert-name { font-weight: 600; }
-.cert-link { font-size: 0.9rem; font-weight: 600; }
-.status {
-  padding: 3px 14px; border-radius: 999px; font-size: 0.8rem; font-weight: 700;
-  color: var(--warn); background: color-mix(in srgb, var(--warn) 14%, transparent);
-}
-.status-done { color: var(--muted); background: var(--accent-soft); }
-
-/* ---------- Hobbies ---------- */
-.hobbies-list { display: flex; flex-wrap: wrap; gap: 14px; }
-.hobby {
-  display: inline-flex; align-items: center; gap: 12px;
-  padding: 14px 24px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 999px; font-weight: 500;
-  transition: transform var(--ease), border-color var(--ease);
-}
-.hobby:hover { transform: translateY(-3px); border-color: var(--accent); }
-
-/* ---------- Contact ---------- */
-.contact-wrap { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
-.contact-list { flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px; }
-.contact-row {
-  display: flex; flex-direction: column; gap: 2px;
-  padding: 16px 20px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius-sm);
-}
-.contact-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
-.contact-row a { font-weight: 600; word-break: break-all; }
-
-.contact-form {
-  flex: 1 1 380px; display: flex; flex-direction: column; gap: 18px;
-  padding: 28px; background: var(--surface);
-  border: 1px solid var(--border); border-radius: var(--radius);
-}
-.field { display: flex; flex-direction: column; gap: 6px; }
-.field label { font-weight: 600; font-size: 0.92rem; }
-.field input, .field textarea {
-  width: 100%; padding: 12px 14px; font: inherit; color: var(--text);
-  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm);
-  transition: border-color var(--ease), box-shadow var(--ease);
-}
-.field textarea { resize: vertical; min-height: 120px; }
-.field input:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.field.invalid input, .field.invalid textarea { border-color: #ef4444; }
-.form-status { min-height: 1.5em; font-weight: 600; font-size: 0.93rem; }
-.form-status.ok { color: var(--accent); }
-.form-status.err { color: #ef4444; }
-.contact-form .btn { align-self: flex-start; }
-
-/* ---------- Footer ---------- */
-.site-footer { padding-block: 30px; border-top: 1px solid var(--border); background: var(--bg); color: var(--muted); font-size: 0.9rem; }
-.footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
-
-/* ---------- Back to top ---------- */
-.back-to-top {
-  position: fixed; bottom: 24px; inset-inline-end: 24px;
-  width: 46px; height: 46px; border: 0; border-radius: 50%;
-  background: var(--accent); color: var(--accent-ink);
-  font-size: 1.3rem; font-weight: 700; cursor: pointer; box-shadow: var(--shadow);
-  opacity: 0; visibility: hidden; transform: translateY(12px);
-  transition: opacity var(--ease), transform var(--ease), visibility var(--ease);
-}
-.back-to-top.show { opacity: 1; visibility: visible; transform: none; }
-
-/* ---------- RTL tweaks ---------- */
-[dir="rtl"] .logo-text { letter-spacing: 0; }
-[dir="rtl"] .name { letter-spacing: 0; }
-[dir="rtl"] .contact-label { letter-spacing: 0; }
-
-/* ---------- Responsive ---------- */
-@media (max-width: 1020px) {
-  .nav-links a { padding: 8px 9px; font-size: 0.88rem; }
-}
-
-@media (max-width: 900px) {
-  .menu-btn { display: inline-flex; }
-
-  .nav-links {
-    position: absolute; top: var(--header-h); inset-inline: 0;
-    flex-direction: column; align-items: stretch; gap: 2px;
-    padding: 12px 24px 18px;
-    background: var(--bg); border-bottom: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    display: none;
+    footerText: "© {year} جنى زياد الدمنهوري",
+    footerNote: "صُنع يدويًا باستخدام HTML وCSS وJavaScript.",
+    themeToLight: "التبديل إلى المظهر الفاتح", themeToDark: "التبديل إلى المظهر الداكن"
   }
-  .nav-links.open { display: flex; }
-  .nav-links a { padding: 12px 14px; font-size: 1rem; }
+};
 
-  .hero-inner { flex-direction: column-reverse; text-align: center; gap: 36px; }
-  .summary { margin-inline: auto; }
-  .hero-actions, .stats { justify-content: center; }
-  .stat { align-items: center; }
-  .section { padding-block: 60px; }
+/* ---------------------------------------------------------
+   2. Small helpers
+   --------------------------------------------------------- */
+const root = document.documentElement;
+const $ = (selector, scope = document) => scope.querySelector(selector);
+const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
+
+// localStorage can throw (private mode, blocked storage) -> always guard it.
+const store = {
+  get(key) { try { return localStorage.getItem(key); } catch { return null; } },
+  set(key, value) { try { localStorage.setItem(key, value); } catch { /* ignore */ } }
+};
+
+const state = {
+  lang: "en",
+  theme: "dark",
+  photo: "professional"
+};
+
+const t = (key) => translations[state.lang][key] ?? translations.en[key] ?? key;
+
+/* ---------------------------------------------------------
+   3. Theme switcher (Exercise 00 – mandatory feature)
+   Lifecycle:
+     click on #theme-toggle  -> "click" event fires
+     -> toggleTheme() callback runs
+     -> data-theme attribute on <html> changes
+     -> CSS variables for that theme take over, page re-colors.
+   --------------------------------------------------------- */
+const themeBtn = $("#theme-toggle");
+const themeIcon = $("#theme-icon");
+
+function applyTheme(theme) {
+  state.theme = theme;
+  root.setAttribute("data-theme", theme);                 // DOM mutation -> CSS variables swap
+  themeIcon.textContent = theme === "dark" ? "☀️" : "🌙"; // icon shows the theme you can switch TO
+  themeBtn.setAttribute("title", theme === "dark" ? t("themeToLight") : t("themeToDark"));
+  store.set("theme", theme);
 }
 
-@media (max-width: 560px) {
-  .container, .nav { padding-inline: 16px; }
-  .card, .skill-card, .card-featured { flex-basis: 100%; }
-  .contact-form { padding: 20px; }
-  .contact-form .btn, .hero-actions .btn { width: 100%; }
-  .timeline { padding-inline-start: 28px; }
-  .timeline-item::before { inset-inline-start: -28px; }
-  .footer-inner { flex-direction: column; text-align: center; }
+function toggleTheme() {
+  applyTheme(state.theme === "dark" ? "light" : "dark");
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+themeBtn.addEventListener("click", toggleTheme);
+
+/* ---------------------------------------------------------
+   4. Profile photo switcher (Bounce 01)
+   Lifecycle:
+     click on a .chip -> event fires -> setPhoto() runs
+     -> fade out (class .fading) -> swap .src and .alt
+     -> fade in (class removed). Page never reloads.
+   --------------------------------------------------------- */
+const photo = $("#profile-photo");
+const chips = $$(".chip");
+
+const photoSources = {
+  casual: { src: "assets/photo-casual.jpg", altKey: "altCasual" },
+  professional: { src: "assets/photo-professional.jpg", altKey: "altPro" }
+};
+
+const FALLBACK_PHOTO = "assets/avatar-fallback.svg";
+const FADE_MS = 250; // must match the CSS transition duration
+
+// If a photo file is missing, show a neutral avatar instead of a broken icon.
+photo.addEventListener("error", () => {
+  if (!photo.src.endsWith("avatar-fallback.svg")) photo.src = FALLBACK_PHOTO;
+});
+
+function updateChips() {
+  chips.forEach((chip) => {
+    const active = chip.dataset.photo === state.photo;
+    chip.classList.toggle("active", active);
+    chip.setAttribute("aria-pressed", String(active));
+  });
 }
+
+function setPhoto(kind) {
+  if (!photoSources[kind] || kind === state.photo) return;
+  state.photo = kind;
+  updateChips();
+
+  photo.classList.add("fading");
+  setTimeout(() => {
+    photo.src = photoSources[kind].src;       // DOM mutation: src
+    photo.alt = t(photoSources[kind].altKey); // DOM mutation: alt
+    photo.classList.remove("fading");
+  }, FADE_MS);
+
+  store.set("photo", kind);
+}
+
+chips.forEach((chip) => {
+  chip.addEventListener("click", () => setPhoto(chip.dataset.photo));
+});
+
+/* ---------------------------------------------------------
+   5. Language switcher (Bounce 02)
+   Lifecycle:
+     click on #lang-toggle -> event fires -> toggleLanguage()
+     -> set lang + dir on <html> -> rewrite every [data-i18n]
+     element's textContent from the dictionary.
+   --------------------------------------------------------- */
+const langBtn = $("#lang-toggle");
+
+function applyLanguage(lang) {
+  state.lang = lang;
+  const isArabic = lang === "ar";
+
+  root.setAttribute("lang", lang);
+  root.setAttribute("dir", isArabic ? "rtl" : "ltr");
+
+  // Text content
+  $$("[data-i18n]").forEach((el) => {
+    const key = el.dataset.i18n;
+    if (translations[lang][key] !== undefined) el.textContent = translations[lang][key];
+  });
+
+  // aria-label attributes
+  $$("[data-i18n-aria]").forEach((el) => {
+    el.setAttribute("aria-label", t(el.dataset.i18nAria));
+  });
+
+  // Elements that are not plain text
+  document.title = t("pageTitle");
+  langBtn.textContent = t("langButton");
+  langBtn.setAttribute("aria-label", t("langLabel"));
+  photo.alt = t(photoSources[state.photo].altKey);
+  $("#footer-text").textContent = t("footerText").replace("{year}", new Date().getFullYear());
+  themeBtn.setAttribute("title", state.theme === "dark" ? t("themeToLight") : t("themeToDark"));
+
+  // Clear stale form messages (they would be in the old language)
+  clearFormStatus();
+
+  store.set("lang", lang);
+}
+
+function toggleLanguage() {
+  applyLanguage(state.lang === "en" ? "ar" : "en");
+}
+
+langBtn.addEventListener("click", toggleLanguage);
+
+/* ---------------------------------------------------------
+   6. Mobile menu
+   --------------------------------------------------------- */
+const menuBtn = $("#menu-toggle");
+const navLinks = $("#nav-links");
+
+function setMenu(open) {
+  navLinks.classList.toggle("open", open);
+  menuBtn.setAttribute("aria-expanded", String(open));
+}
+
+menuBtn.addEventListener("click", () => setMenu(!navLinks.classList.contains("open")));
+navLinks.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") setMenu(false); });
+
+/* ---------------------------------------------------------
+   7. Active nav link while scrolling + back-to-top button
+   --------------------------------------------------------- */
+const sections = $$("main section[id]");
+const linkFor = (id) => $(`.nav-links a[href="#${id}"]`);
+
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        $$(".nav-links a").forEach((a) => a.classList.remove("active"));
+        linkFor(entry.target.id)?.classList.add("active");
+      }
+    });
+  }, { rootMargin: "-45% 0px -50% 0px" });
+  sections.forEach((s) => observer.observe(s));
+}
+
+const topBtn = $("#back-to-top");
+window.addEventListener("scroll", () => {
+  topBtn.classList.toggle("show", window.scrollY > 500);
+}, { passive: true });
+topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+/* ---------------------------------------------------------
+   8. Contact form (client-side validation, opens mail client)
+   There is no backend, so a valid form builds a mailto: link.
+   --------------------------------------------------------- */
+const form = $("#contact-form");
+const statusEl = $("#form-status");
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const TO_EMAIL = "jana.cyber.tech@gmail.com";
+
+function clearFormStatus() {
+  statusEl.textContent = "";
+  statusEl.className = "form-status";
+  $$(".field.invalid", form).forEach((f) => f.classList.remove("invalid"));
+}
+
+function showError(input, key) {
+  input.closest(".field").classList.add("invalid");
+  statusEl.className = "form-status err";
+  statusEl.textContent = t(key);
+  input.focus();
+}
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // stop the browser's default submit / page reload
+  clearFormStatus();
+
+  const name = form.elements.name;
+  const email = form.elements.email;
+  const message = form.elements.message;
+
+  if (!name.value.trim()) return showError(name, "errName");
+  if (!EMAIL_RE.test(email.value.trim())) return showError(email, "errEmail");
+  if (!message.value.trim()) return showError(message, "errMessage");
+
+  const subject = encodeURIComponent(`Portfolio message from ${name.value.trim()}`);
+  const body = encodeURIComponent(`${message.value.trim()}\n\n— ${name.value.trim()} (${email.value.trim()})`);
+
+  statusEl.className = "form-status ok";
+  statusEl.textContent = t("formOk");
+  window.location.href = `mailto:${TO_EMAIL}?subject=${subject}&body=${body}`;
+  form.reset();
+});
+
+/* ---------------------------------------------------------
+   9. Init: restore saved preferences (or sensible defaults)
+   --------------------------------------------------------- */
+(function init() {
+  const savedTheme = store.get("theme");
+  const prefersLight = window.matchMedia?.("(prefers-color-scheme: light)").matches;
+  const theme = savedTheme || (prefersLight ? "light" : "dark");
+
+  const savedLang = store.get("lang");
+  const lang = savedLang === "ar" || savedLang === "en" ? savedLang : "en";
+
+  const savedPhoto = store.get("photo");
+  if (photoSources[savedPhoto]) {
+    state.photo = savedPhoto;
+    photo.src = photoSources[savedPhoto].src;
+    updateChips();
+  }
+
+  applyLanguage(lang);
+  applyTheme(theme);
+})();
