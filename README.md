@@ -1,40 +1,67 @@
 # Personal Portfolio – Jana Zeyad AL-Damanhouri
 
-A responsive personal portfolio built with plain HTML5, CSS3 and JavaScript (ES6+). No frameworks, templates or UI libraries.
+A responsive, bilingual (English / Arabic) personal portfolio built from scratch with
+**HTML5, CSS3 and vanilla JavaScript (ES6+)**. No frameworks, templates, or UI libraries.
+
+Covers: **Ex00** (Personal Portfolio) + **Bounce 01** (Profile Photo Switcher) + **Bounce 02** (Language Switcher).
 
 ## Files
 
-- `index.html` – page structure (semantic HTML)
-- `style.css` – styling, theme variables, Flexbox layout, media queries, RTL support
-- `script.js` – theme switcher, photo switcher, EN/AR language switcher, contact form, back-to-top
-- `assets/` – profile photos (`photo-casual.svg`, `photo-professional.svg`)
+```
+index.html   – page structure (semantic HTML)
+style.css    – styling: CSS variables, Flexbox, media queries, RTL support
+script.js    – theme switcher, photo switcher, language switcher, form, menu
+assets/      – photo-professional.jpg, photo-casual.jpg, avatar-fallback.svg
+README.md    – this file
+```
+
+> Put your two photos in `assets/` with these exact names:
+> `photo-professional.jpg` and `photo-casual.jpg`.
+> If one is missing, `avatar-fallback.svg` is shown instead.
 
 ## Sections
 
-Navbar, About Me (with photo), Skills, Projects (Projects 00–03 + graduation and ISO 27001 projects), Training, Certifications, Hobbies, Contact (details + form), Footer.
+Header/Navbar · About Me (with photo) · Skills grid · Projects (00–04, graduation, capstone) ·
+Training · Certifications · Hobbies · Contact form · Footer.
 
 ## Features
 
-### 1. Theme switcher (mandatory)
-The 🌙 / ☀️ button toggles `data-theme="light|dark"` on `<html>`. All colors in `style.css` are CSS variables, so changing the attribute changes the whole page. The choice is saved in `localStorage`.
+| Feature | Where |
+|---|---|
+| Dark / light theme switcher (mandatory) | `applyTheme()` / `toggleTheme()` |
+| Profile photo switcher with fade transition | `setPhoto()` |
+| English ⇄ Arabic with `dir="rtl"` / `lang="ar"` | `translations` object + `applyLanguage()` |
+| Mobile menu, active-link highlighting, back-to-top | sections 6–7 of `script.js` |
+| Contact form validation (opens the mail app via `mailto:`) | section 8 of `script.js` |
+| Saved preferences (theme, language, photo) | `localStorage` (guarded with try/catch) |
 
-**Event lifecycle:**
-1. **User action** – the user clicks the theme button.
-2. **Event firing** – the browser fires a `click` event on `#theme-toggle`.
-3. **JavaScript callback** – the listener registered with `addEventListener("click", toggleTheme)` runs `toggleTheme()`.
-4. **DOM/CSS mutation** – the callback changes `root.dataset.theme`; the CSS selector `:root[data-theme="dark"]` now matches, the variables are recalculated, and the browser repaints with a smooth transition.
+## Event lifecycle (how the theme switcher works)
 
-### 2. Profile photo switcher (Bounce 01)
-Two buttons switch between a casual and a professional photo. The image fades out (`.fading` class → opacity 0), then JS updates `img.src` and `img.alt`, and the image fades back in once it has loaded. The page never reloads.
+1. **User action** – the visitor clicks the 🌙/☀️ button (`#theme-toggle`).
+2. **Event firing** – the browser fires a `click` event on that button; the listener registered with
+   `addEventListener("click", toggleTheme)` is notified.
+3. **JavaScript callback** – `toggleTheme()` runs, reads the current theme from `state.theme`
+   and calls `applyTheme()` with the opposite value.
+4. **DOM / CSS mutation** – `applyTheme()` sets `data-theme="light|dark"` on `<html>`.
+   CSS rules `:root[data-theme="..."]` redefine the colour variables (`--bg`, `--text`, `--accent`…),
+   so every element re-colours instantly (with a short CSS transition). The icon and `localStorage`
+   are updated too.
 
-### 3. Language switcher EN / AR (Bounce 02)
-- All texts live in a `translations` object (`en` and `ar`).
-- Elements carry `data-i18n="key"`; JS loops over them and sets `textContent`.
-- JS sets `lang` and `dir` on `<html>` (`ar`/`rtl` or `en`/`ltr`).
-- CSS uses logical properties (`inset-inline-start`, `padding-inline-start`, `inset-inline-end`) so the layout mirrors correctly in RTL, and the Cairo font is used for Arabic.
+The photo and language switchers follow the same chain:
+click → listener → `setPhoto()` / `toggleLanguage()` → change `src`/`alt` or `textContent`, `lang`, `dir`.
 
-### 4. Contact form
-Validates the fields with `checkValidity()`, shows a translated status message, then opens the user's email app with a pre-filled message (`mailto:`).
+## RTL strategy
+
+- JS sets `lang` and `dir` on `<html>`.
+- CSS uses **logical properties** (`padding-inline-start`, `inset-inline-end`, `margin-inline`)
+  and Flexbox, so the layout mirrors automatically without a separate Arabic stylesheet.
+- Emails, phone numbers and URLs keep `dir="ltr"` so they never get scrambled.
 
 ## Responsive design
-Flexbox is used for the navbar, hero, skills, project cards, certifications, hobbies and contact layout. Media queries at 900px and 600px adapt the layout for tablets and phones.
+
+Flexbox with `flex-wrap` for all grids; media queries at `1020px`, `900px` (hamburger menu,
+stacked hero) and `560px` (single column, full-width buttons). `prefers-reduced-motion` is respected.
+
+## Run it
+
+Open `index.html` in any browser. No build step.
