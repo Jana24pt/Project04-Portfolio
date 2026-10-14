@@ -1,11 +1,4 @@
-/* =========================================================
-   Jana AL-Damanhouri – Portfolio
-   Hand-written CSS3: custom properties, Flexbox, media queries.
-   Logical properties (inline-start / inline-end) are used so the
-   layout flips cleanly between LTR (English) and RTL (Arabic).
-   ========================================================= */
 
-/* ---------- Theme tokens ---------- */
 :root {
   --radius: 16px;
   --radius-sm: 10px;
@@ -46,7 +39,6 @@
   --shadow: 0 10px 30px rgba(17, 25, 43, 0.1);
 }
 
-/* ---------- Reset / base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 12px); }
@@ -87,7 +79,6 @@ a:hover { text-decoration: underline; }
 }
 .skip-link:focus { top: 10px; text-decoration: none; }
 
-/* ---------- Header / Navbar ---------- */
 .site-header {
   position: sticky;
   top: 0;
@@ -155,7 +146,6 @@ a:hover { text-decoration: underline; }
 .menu-btn[aria-expanded="true"] .bars::before { transform: translateY(6px) rotate(45deg); }
 .menu-btn[aria-expanded="true"] .bars::after { transform: translateY(-6px) rotate(-45deg); }
 
-/* ---------- Sections ---------- */
 .section { padding-block: 84px; }
 .section:nth-of-type(even) { background: var(--bg-alt); }
 
@@ -171,7 +161,6 @@ a:hover { text-decoration: underline; }
   width: 5px; border-radius: 4px; background: var(--accent);
 }
 
-/* ---------- Hero / About ---------- */
 .hero { padding-block: 72px 90px; background: var(--bg) !important; }
 .hero-inner { display: flex; align-items: center; justify-content: space-between; gap: 56px; }
 .hero-text { flex: 1 1 0; min-width: 0; }
@@ -214,7 +203,6 @@ a:hover { text-decoration: underline; }
 .stat strong { font-family: var(--mono); font-size: 1.7rem; color: var(--accent); line-height: 1.2; }
 .stat span { font-size: 0.85rem; color: var(--muted); }
 
-/* Photo + switcher (Bounce 01) */
 .photo-box { display: flex; flex-direction: column; align-items: center; gap: 20px; flex: 0 0 auto; }
 .photo-frame {
   padding: 8px; border-radius: 50%;
@@ -238,7 +226,6 @@ a:hover { text-decoration: underline; }
 .chip:hover { color: var(--text); }
 .chip.active { background: var(--accent); color: var(--accent-ink); }
 
-/* ---------- Skills ---------- */
 .skills-grid { display: flex; flex-wrap: wrap; gap: 20px; }
 .skill-card {
   flex: 1 1 300px;
@@ -252,7 +239,6 @@ a:hover { text-decoration: underline; }
 .skill-card h3 { font-size: 1.12rem; }
 .skill-card p { color: var(--muted); font-family: var(--mono); font-size: 0.88rem; }
 
-/* ---------- Projects ---------- */
 .card-container { display: flex; flex-wrap: wrap; gap: 22px; }
 .card {
   flex: 1 1 320px;
@@ -277,7 +263,6 @@ a:hover { text-decoration: underline; }
 }
 .card-link:hover { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); text-decoration: none; }
 
-/* ---------- Training timeline ---------- */
 .timeline { position: relative; display: flex; flex-direction: column; gap: 28px; padding-inline-start: 34px; }
 .timeline::before {
   content: ""; position: absolute; top: 6px; bottom: 6px; inset-inline-start: 7px;
@@ -298,7 +283,6 @@ a:hover { text-decoration: underline; }
 .timeline-item p { color: var(--muted); }
 .timeline-item .date { color: var(--accent); font-family: var(--mono); font-size: 0.85rem; font-weight: 600; }
 
-/* ---------- Certifications ---------- */
 .cert-list { display: flex; flex-direction: column; gap: 12px; }
 .cert-item {
   display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
@@ -315,7 +299,6 @@ a:hover { text-decoration: underline; }
 }
 .status-done { color: var(--muted); background: var(--accent-soft); }
 
-/* ---------- Hobbies ---------- */
 .hobbies-list { display: flex; flex-wrap: wrap; gap: 14px; }
 .hobby {
   display: inline-flex; align-items: center; gap: 12px;
@@ -325,7 +308,6 @@ a:hover { text-decoration: underline; }
 }
 .hobby:hover { transform: translateY(-3px); border-color: var(--accent); }
 
-/* ---------- Contact ---------- */
 .contact-wrap { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
 .contact-list { flex: 1 1 320px; display: flex; flex-direction: column; gap: 14px; }
 .contact-row {
@@ -356,11 +338,9 @@ a:hover { text-decoration: underline; }
 .form-status.err { color: #ef4444; }
 .contact-form .btn { align-self: flex-start; }
 
-/* ---------- Footer ---------- */
 .site-footer { padding-block: 30px; border-top: 1px solid var(--border); background: var(--bg); color: var(--muted); font-size: 0.9rem; }
 .footer-inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
 
-/* ---------- Back to top ---------- */
 .back-to-top {
   position: fixed; bottom: 24px; inset-inline-end: 24px;
   width: 46px; height: 46px; border: 0; border-radius: 50%;
@@ -371,12 +351,10 @@ a:hover { text-decoration: underline; }
 }
 .back-to-top.show { opacity: 1; visibility: visible; transform: none; }
 
-/* ---------- RTL tweaks ---------- */
 [dir="rtl"] .logo-text { letter-spacing: 0; }
 [dir="rtl"] .name { letter-spacing: 0; }
 [dir="rtl"] .contact-label { letter-spacing: 0; }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 1020px) {
   .nav-links a { padding: 8px 9px; font-size: 0.88rem; }
 }
